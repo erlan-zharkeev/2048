@@ -1,24 +1,30 @@
-//sound 
-export let soundActive = false;
-const icon = document.querySelector('.sound').children[0];
-icon.addEventListener('click', onSound);
+import { Howl } from 'howler'
 
-export const moveSound = document.getElementById('move');
-export const mergeSound = document.getElementById('merge');
+let soundActive = false
 
-function onSound() {
-	soundActive = true;
-	icon.classList.remove('bg-no_sound');
-	icon.classList.add('bg-sound');
-	icon.removeEventListener('click', onSound);
-	icon.addEventListener('click', offSound);
+export class Sound {
+  constructor(sound) {
+    this._sound = new Howl({
+      src: [`../assets/audio/${sound}.mp3`],
+      volume: 0.3,
+    })
+    if (soundActive) this._sound.play()
+  }
 }
 
-function offSound() {
-	soundActive = false;
-	icon.classList.remove('bg-sound');
-	icon.classList.add('bg-no_sound');
-	icon.removeEventListener('click', offSound);
-	icon.addEventListener('click', onSound);
+export const moveSound = new Howl({
+  src: ['../assets/audio/move.mp3'],
+})
+export const mergeSound = new Howl({
+  src: ['../assets/audio/merge.mp3'],
+})
+
+const icon = document.querySelector('#sound-icon')
+
+function toggleSound() {
+  soundActive = !soundActive
+  if (icon.className === 'bg-no__sound') icon.className = 'bg-sound'
+  else icon.className = 'bg-no__sound'
 }
 
+icon.addEventListener('click', toggleSound)

@@ -1,47 +1,43 @@
-//game controls
-import {
-	initGame,
-	status
-} from './table';
+import { initGame } from './table'
 
-import {
-	Storage
-} from './localStorageSaver';
+import { Storage } from './localStorageSaver'
 
-export const settings = document.querySelector('.settings-icon');
-const settingsContent = document.querySelector('.settings-content');
+const settings = document.querySelector('.settings-icon')
+
+export default settings
+
+const settingsContent = document.querySelector('.settings-content')
 
 settings.addEventListener('click', () => {
-	settingsContent.classList.toggle('hide');
-});
+  settingsContent.classList.toggle('hide')
+})
 
-const newGameBtn = document.querySelector('.new-game-btn');
-const newGameBtnInner = document.getElementById('new-game');
-const continueBtn = document.getElementById('continue');
-
-newGameBtn.addEventListener('click', newGame);
-newGameBtnInner.addEventListener('click', newGame);
-continueBtn.addEventListener('click', continueGame);
+const newGameBtn = document.querySelector('.new-game-btn')
+const newGameBtnInner = document.getElementById('new-game')
+const continueBtn = document.getElementById('continue')
 
 function newGame() {
-	const squares = document.querySelectorAll('.square');
-	squares.forEach(sq => {
-		sq.remove();
-	})
-	status = false;
-	let score = document.querySelector('.score').querySelector('span');
-	score.textContent = 0;
-	const loseMess = document.querySelector('.lose');
-	loseMess.classList.add('hide');
-	initGame();
-	let lcStorage = new Storage
-	lcStorage.write();
+  const squares = document.querySelectorAll('.square')
+  squares.forEach((square) => {
+    square.remove()
+  })
+  const score = document.querySelector('.score').querySelector('span')
+  score.textContent = 0
+  const loseMessage = document.querySelector('.lose')
+  loseMessage.classList.add('hide')
+  initGame()
+  const lcStorage = new Storage()
+  lcStorage.write()
 }
+
+newGameBtn.addEventListener('click', newGame)
+newGameBtnInner.addEventListener('click', newGame)
 
 function continueGame() {
-	const winMess = document.querySelector('.win');
-	winMess.classList.add('hide');
-	let lcStorage = new Storage
-	lcStorage.write();
+  const winMessage = document.querySelector('.win')
+  winMessage.classList.add('hide')
+  const lcStorage = new Storage()
+  lcStorage.write()
 }
 
+continueBtn.addEventListener('click', continueGame)
