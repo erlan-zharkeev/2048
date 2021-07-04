@@ -1,20 +1,17 @@
 const path = require('path')
 const webpack = require('webpack')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-// auxillary function and vars
+
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
-
 const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`)
 
-/* PLUGINS */
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {
   CleanWebpackPlugin,
 } = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin') // get css from js file
-/// //////////////////////////////////////////
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
