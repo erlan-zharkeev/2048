@@ -23,7 +23,7 @@ module.exports = {
   output: {
     filename: filename('js'),
     path: path.resolve(__dirname, 'dist'),
-    publicPath: './',
+    publicPath: isDev ? './' : '/2048/',
   },
   plugins: [
     new BundleAnalyzerPlugin(),
