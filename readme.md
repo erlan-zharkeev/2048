@@ -9,7 +9,7 @@ Based on [2048](http://saming.fr/p/2048/).
 ### Screenshot
 
 <p align="center">
-  <img src="https://github.com/KETJO/2048/blob/master/src/assets/img/2048.png" alt="2048"/>
+  <img src="https://raw.githubusercontent.com/KETJO/2048/master/src/assets/img/2048.png" alt="2048"/>
 </p>
 
 ## Contributing
