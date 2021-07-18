@@ -1,6 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
@@ -23,7 +22,6 @@ module.exports = {
     publicPath: isDev ? './' : '/2048/',
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve(__dirname, './src/pug/index.pug'),

@@ -12,6 +12,13 @@ settings.addEventListener('click', () => {
   settingsContent.classList.toggle('hide')
 })
 
+window.addEventListener('click', (e) => {
+  const button = e.target.classList.contains('fa')
+  if (!settingsContent.classList.contains('hide') && !button) {
+    settingsContent.classList.add('hide')
+  }
+})
+
 const newGameBtn = document.querySelector('.new-game-btn')
 const newGameBtnInner = document.getElementById('new-game')
 const continueBtn = document.getElementById('continue')
