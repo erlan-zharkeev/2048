@@ -14,6 +14,7 @@
     "class-methods-use-this": "off",
     "radix": ["error", "as-needed"],
     "no-param-reassign": ["error", { "props": false }],
-    "no-new": "off"
+    "no-new": "off",
+    "linebreak-style": ["error", "windows"]
   }
 }
