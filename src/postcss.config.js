@@ -1,7 +1,8 @@
 const autoprefixer = require('autoprefixer')
+
 const plugin = autoprefixer({
-	grid: true
+  grid: true,
 })
 module.exports = {
-	plugins: [plugin]
+  plugins: [plugin],
 }
