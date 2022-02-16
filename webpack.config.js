@@ -126,7 +126,6 @@ module.exports = {
     },
   },
   devServer: {
-    host: '192.168.0.8',
     publicPath: '/',
     port: 8080,
     contentBase: path.join(__dirname, './src/pug/index.pug'),

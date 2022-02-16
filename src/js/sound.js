@@ -1,7 +1,6 @@
 import { Howl } from 'howler'
 
 let soundActive = false
-
 export class Sound {
   constructor(sound) {
     this._sound = new Howl({
@@ -12,11 +11,12 @@ export class Sound {
   }
 }
 
+const basePath = process.env.NODE_ENV === 'development' ? '../assets/audio' : './assets/audio'
 export const moveSound = new Howl({
-  src: ['../assets/audio/move.mp3'],
+  src: [`${basePath}/move.mp3`],
 })
 export const mergeSound = new Howl({
-  src: ['../assets/audio/merge.mp3'],
+  src: [`${basePath}/merge.mp3`],
 })
 
 const icon = document.querySelector('#sound-icon')
