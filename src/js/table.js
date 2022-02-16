@@ -6,7 +6,7 @@ import { Storage } from './localStorageSaver'
 
 import { Sound } from './sound'
 
-const tranDuration = 100
+const transitionDuration = 100
 
 let gameStatus = false
 
@@ -117,7 +117,7 @@ export class Square {
 
       setTimeout(() => {
         clone.remove()
-      }, tranDuration)
+      }, transitionDuration)
 
       if (innerSquare) this._merge(square, innerSquare)
     }
@@ -164,7 +164,7 @@ export class Square {
     square.id = cell.id
     setTimeout(() => {
       square.classList.remove('hide')
-    }, tranDuration / 2.5)
+    }, transitionDuration / 2.5)
   }
 
   _merge(square, innerSquare) {
