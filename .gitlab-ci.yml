@@ -2,7 +2,7 @@ pages:
   image: node:latest
   stage: deploy
   script:
-    - yarn ci
+    - npm ci
     - yarn run build
     - mv public public-vue
     - mv dist public
