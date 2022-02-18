@@ -4,7 +4,6 @@ pages:
   script:
     - npm ci
     - npm run build
-    - mv public public-vue
     - mv dist public
     - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
   artifacts:
