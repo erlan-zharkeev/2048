@@ -11,7 +11,7 @@ export class Sound {
   }
 }
 
-const basePath = process.env.NODE_ENV === 'development' ? '..' : './2048'
+const basePath = process.env.NODE_ENV === 'development' ? '../' : './'
 
 export const moveSound = new Howl({
   src: [`${basePath}/assets/audio/move.mp3`],
