@@ -1,13 +1,11 @@
 pages:
-  image: node:latest
   stage: deploy
   script:
-    - npm ci
-    - npm run build
-    - mv dist public
-    - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
+  - mkdir .public
+  - cp ./dist .public
+  - mv .public public
   artifacts:
     paths:
       - public
   only:
-    - master
+    - prod-build
