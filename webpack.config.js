@@ -6,9 +6,7 @@ const isProd = !isDev
 const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`)
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const {
-  CleanWebpackPlugin,
-} = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -19,7 +17,6 @@ module.exports = {
   output: {
     filename: filename('js'),
     path: path.resolve(__dirname, 'dist'),
-    publicPath: isDev ? './' : '/2048/',
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -32,13 +29,16 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new CopyPlugin({
-      patterns: [{
-        from: path.resolve(__dirname, './src/static'),
-        to: path.resolve(__dirname, 'dist/'),
-      }, {
-        from: path.resolve(__dirname, './src/assets/audio'),
-        to: path.resolve(__dirname, 'dist/assets/audio'),
-      }],
+      patterns: [
+        {
+          from: path.resolve(__dirname, './src/static'),
+          to: path.resolve(__dirname, 'dist/'),
+        },
+        {
+          from: path.resolve(__dirname, './src/assets/audio'),
+          to: path.resolve(__dirname, 'dist/assets/audio'),
+        },
+      ],
     }),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -49,75 +49,89 @@ module.exports = {
     }),
   ],
   module: {
-    rules: [{
-      test: /\.pug$/,
-      use: [{
-        loader: 'pug-loader',
-        options: {
-          pretty: isDev,
-        },
-      }],
-    }, {
-      test: /\.s[ca]ss$/,
-      use: [{
-        loader: MiniCssExtractPlugin.loader,
-      }, 'css-loader', 'postcss-loader', 'sass-loader'],
-    }, {
-      test: /\.css$/,
-      use: [{
-        loader: MiniCssExtractPlugin.loader,
-      }, 'css-loader'],
-    },
-    {
-      test: /\.(gif|png|jpe?g|svg|mp3)$/i,
-      exclude: /node_modules/,
-      use: [{
+    rules: [
+      {
+        test: /\.pug$/,
+        use: [
+          {
+            loader: 'pug-loader',
+            options: {
+              pretty: isDev,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.s[ca]ss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg|mp3)$/i,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              disable: isDev,
+              mozjpeg: {
+                progressive: true,
+                quality: 70,
+              },
+              pngquant: {
+                quality: [0.35, 0.8],
+                speed: 4,
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)$/,
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]',
         },
       },
       {
-        loader: 'image-webpack-loader',
+        test: /\.mp4$/,
+        loader: 'file-loader',
         options: {
-          disable: isDev,
-          mozjpeg: {
-            progressive: true,
-            quality: 70,
-          },
-          pngquant: {
-            quality: [0.35, 0.80],
-            speed: 4,
+          name: '[path][name].[ext]',
+        },
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-class-properties'],
           },
         },
       },
-      ],
-    },
-    {
-      test: /\.(woff(2)?|ttf|eot|svg)$/,
-      loader: 'file-loader',
-      options: {
-        name: '[path][name].[ext]',
-      },
-    },
-    {
-      test: /\.mp4$/,
-      loader: 'file-loader',
-      options: {
-        name: '[path][name].[ext]',
-      },
-    },
-    {
-      test: /\.m?js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-proposal-class-properties'],
-        },
-      },
-    },
     ],
   },
   optimization: {
