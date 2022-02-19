@@ -14,10 +14,10 @@ export class Sound {
 const basePath = process.env.NODE_ENV === 'development' ? '../' : './'
 
 export const moveSound = new Howl({
-  src: [`${basePath}/assets/audio/move.mp3`],
+  src: [`${basePath}assets/audio/move.mp3`],
 })
 export const mergeSound = new Howl({
-  src: [`${basePath}/assets/audio/merge.mp3`],
+  src: [`${basePath}assets/audio/merge.mp3`],
 })
 
 const icon = document.querySelector('#sound-icon')
