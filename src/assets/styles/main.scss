@@ -1,0 +1,102 @@
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: hidden;
+  background-color: $teal;
+  position: fixed;
+  touch-action: none;
+  color: $white;
+  @include MW1024 {
+    font-size: 8px;
+  }
+  @include MW768 {
+    font-size: 6px;
+  }
+  @include MW414 {
+    font-size: 5px;
+  }
+  @include MW320 {
+    font-size: 4px;
+  }
+  @include L823 {
+    font-size: 6px;
+  }
+}
+
+body {
+  font-family: $main-font;
+  background-color: $teal;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+}
+
+.wrapper {
+  background-color: $teal;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.game {
+  background-color: $teal;
+  width: 100%;
+  height: 100%;
+  max-width: 65rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+@include L823 {
+  flex-direction: row;
+  max-width: 100%;
+  justify-content: space-evenly;
+}
+@include MW414 {
+  max-width: 75rem;
+}
+
+&:hover {
+  cursor: pointer;
+}
+
+.table {
+  width: 60rem;
+  height: 60rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: solid $white 0.6rem;
+  border-radius: 3%;
+  box-shadow: 0.5rem 0.5rem 2rem black;
+  background-color: #fff;
+
+  &__cell {
+    width: 100%;
+    height: 100%;
+    border: solid $white 0.6rem;
+    position: relative;
+    border-radius: 7%;
+    background-color: rgb(169 169 169);
+  }
+  @include MW414 {
+    width: 70rem;
+    height: 70rem;
+  }
+  @include L823 {
+    width: 50rem;
+    height: 50rem;
+  }
+}

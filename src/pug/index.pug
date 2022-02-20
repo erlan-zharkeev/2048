@@ -1,4 +1,4 @@
-html(lang="en")
+html(lang='en')
   include includes/head
   body
     .wrapper
@@ -9,17 +9,17 @@ html(lang="en")
           .title
             h1 2048
           .sound
-            .bg-no__sound#sound-icon
+            #sound-icon.bg-no-sound
           .score
             p score
             span#scoreNum 0
           .new-game-btn
             span new game
         .table
-          - var rowCell = 0;
+          - var rowCell = 0
           while rowCell<4
-            - ++rowCell;
-            - var colCell = 0;
+            - ++rowCell
+            - var colCell = 0
             while colCell<4
-              - ++colCell;
+              - ++colCell
               .table__cell(id=`${rowCell}-${colCell}`)
