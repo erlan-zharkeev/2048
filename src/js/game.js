@@ -6,19 +6,13 @@ import {
   loadGameFromLs,
 } from './system'
 
-import { toggleModal, closeAllMessages } from './domUpdate'
-
-global.onbeforeunload = () => {
-  global.$ls.saveAll()
-}
+import { toggleModal, closeAllMessages, setVersion } from './domUpdate'
 
 global.onload = () => {
   const lsData = global.$ls.getLsData()
-  if (lsData) loadGameFromLs(lsData)
-  else {
-    initGame()
-    global.$ls.saveAll()
-  }
+  lsData ? loadGameFromLs(lsData) : initGame()
+  global.$ls.saveAll()
+  setVersion()
   listenSwipe()
   global.$state.$refs().soundIcon.addEventListener('click', () => {
     global.$state.toggleSoundStatus()
