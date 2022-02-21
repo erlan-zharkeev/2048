@@ -14,7 +14,11 @@ global.onbeforeunload = () => {
 
 global.onload = () => {
   const lsData = global.$ls.getLsData()
-  lsData ? loadGameFromLs(lsData) : initGame()
+  if (lsData) loadGameFromLs(lsData)
+  else {
+    initGame()
+    global.$ls.saveAll()
+  }
   listenSwipe()
   global.$state.$refs().soundIcon.addEventListener('click', () => {
     global.$state.toggleSoundStatus()
