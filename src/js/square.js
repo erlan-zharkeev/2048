@@ -316,6 +316,7 @@ export default class Square {
     }
     global.$ls.save({
       squares: global.$state.getSquaresMap(),
+      score: global.$state.getScore(),
     })
   }
 }
