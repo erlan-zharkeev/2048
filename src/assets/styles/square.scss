@@ -1,0 +1,99 @@
+.s2 {
+  background-color: $cyan;
+}
+
+.s4 {
+  background-color: $brown;
+}
+
+.s8 {
+  background-color: $lime;
+}
+
+.s16 {
+  background-color: $green;
+}
+
+.s32 {
+  background-color: $orange;
+}
+
+.s64 {
+  background-color: $purple;
+}
+
+.s128 {
+  background-color: $deeppurple;
+}
+
+.s256 {
+  background-color: $pink;
+}
+
+.s512 {
+  background-color: $amber;
+}
+
+.s1024 {
+  background-color: $bluegrey;
+}
+
+.s2048 {
+  background-color: $red;
+}
+
+.square {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-weight: 800;
+  font-size: 4rem;
+  border-radius: 6%;
+  opacity: 1;
+  transition: 0.1s;
+
+  @include L823 {
+    font-size: 3rem;
+  }
+}
+
+.new {
+  animation-name: new;
+  animation-duration: 0.3s;
+}
+
+@keyframes new {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.merged {
+  transition: 0.1s;
+  animation-name: scaler;
+  animation-duration: 0.5s;
+}
+
+@keyframes scaler {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
