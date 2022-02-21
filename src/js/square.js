@@ -140,7 +140,7 @@ export default class Square {
     square.id = cell.id
     setTimeout(() => {
       square.classList.remove('hide')
-    }, global.$state.getTransitionDuration() / 2.5)
+    }, global.$state.getTransitionDuration())
   }
 
   _merge(square, innerSquare) {
@@ -314,5 +314,8 @@ export default class Square {
       this._freeCell.append(this._square)
       this._square.classList.add('new')
     }
+    global.$ls.save({
+      squares: global.$state.getSquaresMap(),
+    })
   }
 }

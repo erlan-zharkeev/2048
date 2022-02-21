@@ -15,6 +15,7 @@ export default class State {
     this._transitionDuration = transitionDuration
 
     this._refs = {
+      version: document.querySelector('.version'),
       table: document.querySelector('.table'),
       cells: document.querySelectorAll('.table__cell'),
       questionIcon: document.querySelector('.question-icon'),
@@ -88,8 +89,9 @@ export default class State {
 
   getSquaresMap() {
     const result = []
-    this.getUpdatedDomSquares().forEach((sq) => {
-      result.push({ value: sq.textContent, position: sq.id })
+    this.getUpdatedDomSquares().forEach((square) => {
+      if (square.classList.contains('clone')) return
+      result.push({ value: square.textContent, position: square.id })
     })
     return result
   }

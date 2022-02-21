@@ -1,4 +1,10 @@
 import Square from './square'
+import { version } from '../../package.json'
+
+export function setVersion() {
+  const versionDom = global.$state.$refs().version
+  versionDom.textContent = `v.${version}`
+}
 
 export function updateSoundIcon() {
   const icon = global.$state.$refs().soundIcon

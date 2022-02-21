@@ -3,7 +3,7 @@ export default class LocalStorage {
     const data = {
       squares: global.$state.getSquaresMap(),
       score: global.$state.getScore(),
-      soundStatus: global.$state.getSoundStatus()
+      soundStatus: global.$state.getSoundStatus(),
     }
     this.save(data)
   }
@@ -18,7 +18,6 @@ export default class LocalStorage {
 
   save(data) {
     const currentData = this.getLsData() ? this.getLsData() : {}
-    if (!currentData) return
     Object.entries(data).forEach(([key, val]) => {
       currentData[key] = val
     })
