@@ -1,24 +1,27 @@
 .info {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
   grid-row-gap: 3rem;
-  margin-bottom: 3rem;
+  grid-template-columns: 1fr 2fr 1fr;
   max-width: 65rem;
+  margin-bottom: 3rem;
+
   @include MW414 {
-    max-width: 70rem;
     width: 100%;
+    max-width: 70rem;
   }
+
   @include L823 {
-    width: 30%;
     grid-template-columns: 1fr 1fr;
+    width: 30%;
   }
 }
 
 .title {
-  font-size: 4rem;
-  font-weight: 800;
-  max-height: 7rem;
   align-self: center;
+  max-height: 7rem;
+  font-weight: 800;
+  font-size: 4rem;
+
   @include L568 {
     font-size: 2rem;
   }
@@ -27,43 +30,45 @@
 .bg-sound {
   width: 64px;
   height: 64px;
-  background: url('../img/css_sprites.png') -94px -10px;
+  background: url("../img/css_sprites.png") -94px -10px;
 }
 
 .bg-no-sound {
   width: 64px;
   height: 64px;
-  background: url('../img/css_sprites.png') -10px -10px;
+  background: url("../img/css_sprites.png") -10px -10px;
 }
 
 .sound {
   display: flex;
   justify-content: center;
   max-height: 7rem;
-  transform: scale(0.8);
   outline: none;
+  transform: scale(0.8);
 
   &:hover {
     cursor: pointer;
   }
+
   @include MW768 {
     transform: scale(0.4);
   }
+
   @include L823 {
     transform: scale(0.4);
   }
 }
 
 .score {
+  max-height: 7rem;
   padding: 0.5rem 3rem;
   text-align: right;
   border: white solid 0.4rem;
   border-radius: 8%;
-  max-height: 7rem;
 
   p {
-    font-size: 2rem;
     font-weight: 800;
+    font-size: 2rem;
     text-transform: uppercase;
   }
 
@@ -73,6 +78,7 @@
     animation-duration: 0.5s;
   }
 }
+
 @keyframes smooth-num {
   0% {
     opacity: 0;
@@ -85,25 +91,26 @@
 
 .new-game-btn {
   grid-column: 1/4;
+  width: 100%;
+  padding: 2rem 0;
   color: white;
   font-size: 2rem;
-  border: white solid 0.4rem;
-  width: 100%;
   text-align: center;
-  padding: 2rem 0;
   text-transform: uppercase;
+  border: white solid 0.4rem;
   border-radius: 8%;
 
   &:hover {
-    background-color: #fff;
     color: $bluegrey;
+    background-color: #fff;
     cursor: pointer;
     transition: 0.2s;
   }
+
   @include MW768 {
     &:hover {
-      background-color: $teal;
       color: inherit;
+      background-color: $teal;
     }
   }
 }

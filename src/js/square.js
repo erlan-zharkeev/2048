@@ -8,7 +8,7 @@ export default class Square {
     this._hasNextStep = true
     this._num = num
     this._dir = dir
-    this._squaresArr = []
+    this._sortedSquares = []
     this._square = this._getNewSquare()
     this._squares = global.$state.getUpdatedDomSquares()
     this._clearClass(this._squares, 'merged')
@@ -19,7 +19,7 @@ export default class Square {
 
   _initAction() {
     if (this._hasNextStep) {
-      this._clearClass(this._squaresArr, 'new')
+      this._clearClass(this._sortedSquares, 'new')
       this._prepForMove()
       new Sound('move')
       this._append()
@@ -31,7 +31,7 @@ export default class Square {
 
   _checkForLose() {
     const allPossibleMove = []
-    this._squaresArr.forEach((square) => {
+    this._sortedSquares.forEach((square) => {
       const posCoords = this._getAllPosCoords(square.id)
       const hasNextStep = this._squareHasNextStep(posCoords, square.textContent)
       allPossibleMove.push(hasNextStep)
@@ -73,7 +73,7 @@ export default class Square {
   }
 
   _prepForMove() {
-    this._squaresArr.forEach((square) => {
+    this._sortedSquares.forEach((square) => {
       const startCoords = square.id.split('-')
       this._getNextCell(this._dir, startCoords, square)
     })
@@ -283,7 +283,7 @@ export default class Square {
       default:
         break
     }
-    this._squaresArr = result
+    this._sortedSquares = result
   }
 
   _getFreePos() {

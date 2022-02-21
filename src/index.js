@@ -1,4 +1,4 @@
-import './assets/style/style.sass'
+import './assets/styles/style.sass'
 import './js/ieHider'
 import './js/game'
 import State from './js/state'
