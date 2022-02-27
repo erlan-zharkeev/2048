@@ -8,38 +8,38 @@ import {
 
 import { toggleModal, closeAllMessages, setVersion } from './domUpdate'
 
-global.onload = () => {
-  const lsData = global.$ls.getLsData()
+window.onload = () => {
+  const lsData = window.$ls.getLsData()
   lsData ? loadGameFromLs(lsData) : initGame()
-  global.$ls.saveAll()
+  window.$ls.saveAll()
   setVersion()
   listenSwipe()
-  global.$state.$refs().soundIcon.addEventListener('click', () => {
-    global.$state.toggleSoundStatus()
-    global.$ls.save({
-      soundStatus: global.$state.getSoundStatus(),
+  window.$state.$refs().soundIcon.addEventListener('click', () => {
+    window.$state.toggleSoundStatus()
+    window.$ls.save({
+      soundStatus: window.$state.getSoundStatus(),
     })
   })
-  global.$state.$refs().newGameBtn.addEventListener('click', () => {
+  window.$state.$refs().newGameBtn.addEventListener('click', () => {
     initNewGame()
   })
-  global.$state.$refs().resetGameBtn.addEventListener('click', () => {
+  window.$state.$refs().resetGameBtn.addEventListener('click', () => {
     initNewGame()
     closeAllMessages()
   })
-  global.$state.$refs().continueBtn.addEventListener('click', () => {
+  window.$state.$refs().continueBtn.addEventListener('click', () => {
     closeAllMessages()
   })
-  global.$state.$refs().questionIcon.addEventListener('click', (e) => {
+  window.$state.$refs().questionIcon.addEventListener('click', (e) => {
     e.stopPropagation()
-    if (global.$state.areAllMessagesClosed()) toggleModal()
+    if (window.$state.areAllMessagesClosed()) toggleModal()
   })
-  global.addEventListener('click', () => {
-    const modal = global.$state.$refs().modalBody
+  window.addEventListener('click', () => {
+    const modal = window.$state.$refs().modalBody
     const isModalOpen = !modal.classList.contains('hide')
     if (isModalOpen) modal.classList.add('hide')
   })
-  global.addEventListener('keyup', (e) => {
+  window.addEventListener('keyup', (e) => {
     initMove(e)
   })
 }
