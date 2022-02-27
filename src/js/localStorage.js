@@ -1,9 +1,9 @@
 export default class LocalStorage {
   saveAll() {
     const data = {
-      squares: global.$state.getSquaresMap(),
-      score: global.$state.getScore(),
-      soundStatus: global.$state.getSoundStatus(),
+      squares: window.$state.getSquaresMap(),
+      score: window.$state.getScore(),
+      soundStatus: window.$state.getSoundStatus(),
     }
     this.save(data)
   }

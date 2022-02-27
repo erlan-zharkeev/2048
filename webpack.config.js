@@ -115,13 +115,6 @@ module.exports = {
         },
       },
       {
-        test: /\.mp4$/,
-        loader: 'file-loader',
-        options: {
-          name: '[path][name].[ext]',
-        },
-      },
-      {
         test: /\.m?js$/,
         exclude: /node_modules/,
         use: {
@@ -140,10 +133,6 @@ module.exports = {
     },
   },
   devServer: {
-    publicPath: '/',
-    port: 8080,
-    contentBase: path.join(__dirname, './src/pug/index.pug'),
-    watchContentBase: true,
     clientLogLevel: 'silent',
   },
   devtool: isDev ? 'source-map' : '',

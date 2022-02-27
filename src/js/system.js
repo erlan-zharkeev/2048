@@ -7,21 +7,21 @@ function startMove(dir) {
 }
 
 export function initGame() {
-  for (let i = 0; i < global.$state.getInitSquaresQuantity(); i += 1) {
+  for (let i = 0; i < window.$state.getInitSquaresQuantity(); i += 1) {
     new Square(getRandNum())
   }
 }
 
 export function initNewGame() {
-  global.$state.resetScore()
+  window.$state.resetScore()
   clearSquares()
   initGame()
 }
 
 export function loadGameFromLs(lsData) {
   loadSquares(lsData.squares)
-  global.$state.setScore(lsData.score)
-  global.$state.setSoundStatus(lsData.soundStatus)
+  window.$state.setScore(lsData.score)
+  window.$state.setSoundStatus(lsData.soundStatus)
 }
 
 export function initMove(e) {
@@ -32,7 +32,7 @@ export function initMove(e) {
 }
 
 export function listenSwipe() {
-  const swipeArea = global.$state.$refs().table
+  const swipeArea = window.$state.$refs().table
   const hammerTime = new Hammer(swipeArea)
   hammerTime.get('swipe').set({
     direction: Hammer.DIRECTION_ALL,

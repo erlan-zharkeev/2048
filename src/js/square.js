@@ -3,14 +3,14 @@ import { Sound } from './sound'
 
 export default class Square {
   constructor(num, dir, id) {
-    this._table = global.$state.$refs().table
-    this._cells = global.$state.$refs().cells
+    this._table = window.$state.$refs().table
+    this._cells = window.$state.$refs().cells
     this._hasNextStep = true
     this._num = num
     this._dir = dir
     this._sortedSquares = []
     this._square = this._getNewSquare()
-    this._squares = global.$state.getUpdatedDomSquares()
+    this._squares = window.$state.getUpdatedDomSquares()
     this._clearClass(this._squares, 'merged')
     this._sortSquaresArr()
     if (this._dir) this._initAction()
@@ -37,7 +37,7 @@ export default class Square {
       allPossibleMove.push(hasNextStep)
     })
     this._hasNextStep = !allPossibleMove.every((el) => el === false)
-    if (!this._hastNextStep) global.$state.setGameStatus(false)
+    if (!this._hastNextStep) window.$state.setGameStatus(false)
   }
 
   _squareHasNextStep(coordsArr, checkValue) {
@@ -94,7 +94,7 @@ export default class Square {
 
       setTimeout(() => {
         clone.remove()
-      }, global.$state.getTransitionDuration())
+      }, window.$state.getTransitionDuration())
 
       if (innerSquare) this._merge(square, innerSquare)
     }
@@ -140,16 +140,16 @@ export default class Square {
     square.id = cell.id
     setTimeout(() => {
       square.classList.remove('hide')
-    }, global.$state.getTransitionDuration())
+    }, window.$state.getTransitionDuration())
   }
 
   _merge(square, innerSquare) {
     new Sound('merge')
     innerSquare.remove()
     square.textContent = Number(square.textContent) * 2
-    if (square.textContent === '2048') global.$state.setGameStatus(true)
+    if (square.textContent === '2048') window.$state.setGameStatus(true)
     square.classList.add(`s${square.textContent}`, 'merged')
-    global.$state.addScoreValue(square.textContent)
+    window.$state.addScoreValue(square.textContent)
   }
 
   _isCellFree(coords, posY, posX, square, value) {
@@ -314,9 +314,9 @@ export default class Square {
       this._freeCell.append(this._square)
       this._square.classList.add('new')
     }
-    global.$ls.save({
-      squares: global.$state.getSquaresMap(),
-      score: global.$state.getScore(),
+    window.$ls.save({
+      squares: window.$state.getSquaresMap(),
+      score: window.$state.getScore(),
     })
   }
 }

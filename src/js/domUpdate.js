@@ -2,17 +2,17 @@ import Square from './square'
 import { version } from '../../package.json'
 
 export function setVersion() {
-  const versionDom = global.$state.$refs().version
+  const versionDom = window.$state.$refs().version
   versionDom.textContent = `v.${version}`
 }
 
 export function updateSoundIcon() {
-  const icon = global.$state.$refs().soundIcon
-  icon.className = global.$state.getSoundStatus() ? 'bg-sound' : 'bg-no-sound'
+  const icon = window.$state.$refs().soundIcon
+  icon.className = window.$state.getSoundStatus() ? 'bg-sound' : 'bg-no-sound'
 }
 
 export function clearSquares() {
-  global.$state.getUpdatedDomSquares().forEach((square) => {
+  window.$state.getUpdatedDomSquares().forEach((square) => {
     square.remove()
   })
 }
@@ -24,17 +24,17 @@ export function loadSquares(squares) {
 }
 
 export function updateDomScore() {
-  const score = global.$state.$refs().scoreEl
-  score.textContent = global.$state.getScore()
+  const score = window.$state.$refs().scoreEl
+  score.textContent = window.$state.getScore()
 }
 
 export function toggleModal() {
-  const body = global.$state.$refs().modalBody
+  const body = window.$state.$refs().modalBody
   body.classList.toggle('hide')
 }
 
 export function closeAllMessages() {
-  global.$state.$refs().messages.forEach((message) => {
+  window.$state.$refs().messages.forEach((message) => {
     message.classList.add('hide')
   })
 }
