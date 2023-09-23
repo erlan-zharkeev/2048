@@ -2,45 +2,50 @@ import { randomizer } from './helpers'
 import { sound } from './sound'
 
 export default class Square {
+  #table
+  #cells
+  #hasNextStep
+  #num
+  #dir
+  #sortedSquares
+  #square
+  #squares
   constructor(num, dir, id) {
-    this._table = window.$state.getRefs().table
-    this._cells = window.$state.getRefs().cells
-    this._hasNextStep = true
-    this._num = num
-    this._dir = dir
-    this._sortedSquares = []
-    this._square = this._getNewSquare()
-    this._squares = window.$state.getUpdatedDomSquares()
-    this._clearClass(this._squares, 'merged')
-    this._sortSquaresArr()
-    if (this._dir) this._initAction()
-    else this._append(id)
+    this.#table = window.$state.getRefs().table
+    this.#cells = window.$state.getRefs().cells
+    this.#hasNextStep = true
+    this.#num = num
+    this.#dir = dir
+    this.#sortedSquares = []
+    this.#square = this.#getNewSquare()
+    this.#squares = window.$state.getUpdatedDomSquares()
+    this.#clearClass(this.#squares, 'merged')
+    this.#sortSquaresArr()
+    this.#dir ? this.#initAction() : this.#append(id)
   }
 
-  _initAction() {
-    if (this._hasNextStep) {
-      this._clearClass(this._sortedSquares, 'new')
-      this._prepForMove()
+  #initAction() {
+    if (this.#hasNextStep) {
+      this.#clearClass(this.#sortedSquares, 'new')
+      this.#prepForMove()
       sound('move')
-      this._append()
+      this.#append()
     }
-    if (!this._getFreePos()) {
-      this._checkForLose()
-    }
+    if (!this.#getFreePos()) this.#checkForLose()
   }
 
-  _checkForLose() {
+  #checkForLose() {
     const allPossibleMove = []
-    this._sortedSquares.forEach((square) => {
-      const posCoords = this._getAllPosCoords(square.id)
-      const hasNextStep = this._squareHasNextStep(posCoords, square.textContent)
+    this.#sortedSquares.forEach((square) => {
+      const posCoords = this.#getAllPosCoords(square.id)
+      const hasNextStep = this.#squareHasNextStep(posCoords, square.textContent)
       allPossibleMove.push(hasNextStep)
     })
-    this._hasNextStep = allPossibleMove.some((el) => el)
-    if (!this._hasNextStep) window.$state.setGameStatus(false)
+    this.#hasNextStep = allPossibleMove.some((el) => el)
+    if (!this.#hasNextStep) window.$state.setGameStatus(false)
   }
 
-  _squareHasNextStep(coordsArr, checkValue) {
+  #squareHasNextStep(coordsArr, checkValue) {
     const valuesArr = []
     coordsArr.forEach((cell) => {
       const innerSquare = cell.querySelector('.square')
@@ -50,7 +55,7 @@ export default class Square {
     return !!valuesArr.length
   }
 
-  _getAllPosCoords(coords) {
+  #getAllPosCoords(coords) {
     const arr = []
     const cells = []
     const posY = Number(coords[0])
@@ -60,47 +65,43 @@ export default class Square {
     if (posX !== 4) arr.push(`${posY}-${posX + 1}`)
     if (posX !== 0) arr.push(`${posY}-${posX - 1}`)
     arr.forEach((coord) => {
-      const cell = this._table.querySelector(`.table__cell[id="${coord}"]`)
+      const cell = this.#table.querySelector(`.table__cell[id="${coord}"]`)
       if (cell) cells.push(cell)
     })
     return cells
   }
 
-  _clearClass(arr, className) {
+  #clearClass(arr, className) {
     arr.forEach((el) => {
       el.classList.remove(className)
     })
   }
 
-  _prepForMove() {
-    this._sortedSquares.forEach((square) => {
+  #prepForMove() {
+    this.#sortedSquares.forEach((square) => {
       const startCoords = square.id.split('-')
-      this._getNextCell(this._dir, startCoords, square)
+      this.#getNextCell(this.#dir, startCoords, square)
     })
   }
 
-  _checkForMerge(cell, square) {
-    const contSquare = cell.querySelector('.square')
-    return contSquare?.textContent === square.textContent
-  }
-
-  _moveTo(cell, square, innerSquare, direct) {
+  #moveTo(cell, square, innerSquare, direct) {
     if (cell.id !== square.id) {
-      const clone = this._createClone(square)
-      const startPosClone = this._getStartClonePos(square)
-      this._addClone(clone, startPosClone)
-      this._addOriginal(cell, square)
-      this._moveClone(cell, clone, startPosClone, direct)
+      const clone = this.#createClone(square)
+      const startPosClone = this.#getStartClonePos(square)
+      this.#addClone(clone, startPosClone)
+      this.#addOriginal(cell, square)
+      this.#moveClone(cell, clone, startPosClone, direct)
 
-      setTimeout(() => {
+      const timerId = setTimeout(() => {
         clone.remove()
+        timerId = null
       }, window.$state.getTransitionDuration())
 
-      if (innerSquare) this._merge(square, innerSquare)
+      if (innerSquare) this.#merge(square, innerSquare)
     }
   }
 
-  _createClone(square) {
+  #createClone(square) {
     const clone = square.cloneNode(true)
     clone.classList.add('clone')
 
@@ -110,20 +111,20 @@ export default class Square {
     return clone
   }
 
-  _getStartClonePos(square) {
+  #getStartClonePos(square) {
     const startPosY = square.getBoundingClientRect().top
     const startPosX = square.getBoundingClientRect().left
     return [startPosY, startPosX]
   }
 
-  _addClone(clone, startPosClone) {
+  #addClone(clone, startPosClone) {
     clone.style.top = `${startPosClone[0]}px`
     clone.style.left = `${startPosClone[1]}px`
     document.body.append(clone)
   }
 
-  _moveClone(cell, clone, startPosClone, direct) {
-    const border = parseInt(getComputedStyle(this._table).borderTopWidth)
+  #moveClone(cell, clone, startPosClone, direct) {
+    const border = parseInt(getComputedStyle(this.#table).borderTopWidth)
 
     const endPosY = cell.getBoundingClientRect().top + border
     const endPosX = cell.getBoundingClientRect().left + border
@@ -134,16 +135,17 @@ export default class Square {
     clone.style.transform = isYAxis ? yAxisMoveStyle : xAxisMoveStyle
   }
 
-  _addOriginal(cell, square) {
+  #addOriginal(cell, square) {
     square.classList.add('hide')
     cell.append(square)
     square.id = cell.id
-    setTimeout(() => {
+    const timerId = setTimeout(() => {
       square.classList.remove('hide')
     }, window.$state.getTransitionDuration())
+    timerId = null
   }
 
-  _merge(square, innerSquare) {
+  #merge(square, innerSquare) {
     sound('merge')
     innerSquare.remove()
     square.textContent = Number(square.textContent) * 2
@@ -152,21 +154,21 @@ export default class Square {
     window.$state.addScoreValue(square.textContent)
   }
 
-  _isCellFree(coords, posY, posX, square, value) {
-    const cell = this._table.querySelector(`.table__cell[id="${coords}"]`)
+  #isCellFree(coords, posY, posX, square, value) {
+    const cell = this.#table.querySelector(`.table__cell[id="${coords}"]`)
     if (cell.hasChildNodes()) {
       const innerSquare = cell.querySelector('.square')
       const isContentEqual = innerSquare.textContent === value
       const isNotMerged = !innerSquare.classList.contains('merged')
       if (isContentEqual && isNotMerged) {
-        this._moveTo(cell, square, innerSquare, this._dir)
-      } else this._corrMov(this._dir, `${posY}${posX}`, square)
+        this.#moveTo(cell, square, innerSquare, this.#dir)
+      } else this.#corrMov(this.#dir, `${posY}${posX}`, square)
       return
     }
-    this._getNextCell(this._dir, `${posY}${posX}`, square)
+    this.#getNextCell(this.#dir, `${posY}${posX}`, square)
   }
 
-  _corrMov(direction, coords, square) {
+  #corrMov(direction, coords, square) {
     let posY = Number(coords[0])
     let posX = Number(coords[1])
     let coordinate
@@ -190,11 +192,11 @@ export default class Square {
       default:
         break
     }
-    const cell = this._table.querySelector(`.table__cell[id="${coordinate}"]`)
-    this._moveTo(cell, square, false, direction)
+    const cell = this.#table.querySelector(`.table__cell[id="${coordinate}"]`)
+    this.#moveTo(cell, square, false, direction)
   }
 
-  _getNextCell(direction, startCoords, square) {
+  #getNextCell(direction, startCoords, square) {
     const value = square.textContent
     let coords
     let posY = Number(startCoords[0])
@@ -205,40 +207,40 @@ export default class Square {
         if (posY !== 1) {
           posY -= 1
           coords = `${posY}-${posX}`
-          this._isCellFree(coords, posY, posX, square, value)
+          this.#isCellFree(coords, posY, posX, square, value)
         } else {
-          const cell = this._table.querySelector(`.table__cell[id="${coords}"]`)
-          this._moveTo(cell, square, false, direction)
+          const cell = this.#table.querySelector(`.table__cell[id="${coords}"]`)
+          this.#moveTo(cell, square, false, direction)
         }
         break
       case 'ArrowDown':
         if (posY !== 4) {
           posY += 1
           coords = `${posY}-${posX}`
-          this._isCellFree(coords, posY, posX, square, value)
+          this.#isCellFree(coords, posY, posX, square, value)
         } else {
-          const cell = this._table.querySelector(`.table__cell[id="${coords}"]`)
-          this._moveTo(cell, square, false, direction)
+          const cell = this.#table.querySelector(`.table__cell[id="${coords}"]`)
+          this.#moveTo(cell, square, false, direction)
         }
         break
       case 'ArrowLeft':
         if (posX !== 1) {
           posX -= 1
           coords = `${posY}-${posX}`
-          this._isCellFree(coords, posY, posX, square, value)
+          this.#isCellFree(coords, posY, posX, square, value)
         } else {
-          const cell = this._table.querySelector(`.table__cell[id="${coords}"]`)
-          this._moveTo(cell, square, false, direction)
+          const cell = this.#table.querySelector(`.table__cell[id="${coords}"]`)
+          this.#moveTo(cell, square, false, direction)
         }
         break
       case 'ArrowRight':
         if (posX !== 4) {
           posX += 1
           coords = `${posY}-${posX}`
-          this._isCellFree(coords, posY, posX, square, value)
+          this.#isCellFree(coords, posY, posX, square, value)
         } else {
-          const cell = this._table.querySelector(`.table__cell[id="${coords}"]`)
-          this._moveTo(cell, square, false, direction)
+          const cell = this.#table.querySelector(`.table__cell[id="${coords}"]`)
+          this.#moveTo(cell, square, false, direction)
         }
         break
       default:
@@ -246,18 +248,18 @@ export default class Square {
     }
   }
 
-  _sortSquaresArr() {
+  #sortSquaresArr() {
     let result = []
-    const convertedArr = Array.from(this._squares)
-    switch (this._dir) {
+    const convertedArr = Array.from(this.#squares)
+    switch (this.#dir) {
       case 'ArrowUp':
-        for (let i = this._squares.length - 1; i >= 0; i -= 1) {
-          result.unshift(this._squares[i])
+        for (let i = this.#squares.length - 1; i >= 0; i -= 1) {
+          result.unshift(this.#squares[i])
         }
         break
       case 'ArrowDown':
-        for (let i = this._squares.length - 1; i >= 0; i -= 1) {
-          result.push(this._squares[i])
+        for (let i = this.#squares.length - 1; i >= 0; i -= 1) {
+          result.push(this.#squares[i])
         }
         break
       case 'ArrowLeft':
@@ -283,36 +285,36 @@ export default class Square {
       default:
         break
     }
-    this._sortedSquares = result
+    this.#sortedSquares = result
   }
 
-  _getFreePos() {
+  #getFreePos() {
     const freeCells = []
-    this._cells.forEach((cell) => {
+    this.#cells.forEach((cell) => {
       if (cell.childNodes.length === 0) freeCells.push(cell)
     })
     return freeCells[randomizer(0, freeCells.length)]
   }
 
-  _getNewSquare() {
+  #getNewSquare() {
     const square = document.createElement('div')
     square.classList.add('square')
-    square.textContent = this._num
-    square.classList.add(`s${this._num}`)
+    square.textContent = this.#num
+    square.classList.add(`s${this.#num}`)
     return square
   }
 
-  _append(id = null) {
+  #append(id = null) {
     if (id) {
-      const target = this._table.querySelector(`.table__cell[id="${id}"]`)
-      this._square.id = target.id
-      this._square.classList.add('new')
-      target.append(this._square)
+      const target = this.#table.querySelector(`.table__cell[id="${id}"]`)
+      this.#square.id = target.id
+      this.#square.classList.add('new')
+      target.append(this.#square)
     } else {
-      this._freeCell = this._getFreePos()
-      this._square.id = this._freeCell.id
-      this._freeCell.append(this._square)
-      this._square.classList.add('new')
+      const freeCell = this.#getFreePos()
+      this.#square.id = freeCell.id
+      freeCell.append(this.#square)
+      this.#square.classList.add('new')
     }
     window.$ls.save({
       squares: window.$state.getSquaresMap(),

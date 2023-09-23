@@ -1,6 +1,6 @@
 {
   "name": "2048",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "simple game 2048",
   "private": true,
   "scripts": {
