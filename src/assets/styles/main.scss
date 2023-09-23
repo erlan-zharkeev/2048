@@ -83,8 +83,8 @@ body {
 .table {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  width: 60rem;
-  height: 60rem;
+  width: $main-container;
+  height: $main-container;
   background-color: #fff;
   border: solid $white 0.6rem;
   border-radius: 3%;

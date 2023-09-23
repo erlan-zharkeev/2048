@@ -1,4 +1,5 @@
 # 2048
+Recommended node v 14.20.1
 
 Based on [2048](http://saming.fr/p/2048/).
 

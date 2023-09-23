@@ -2,7 +2,7 @@
   display: grid;
   grid-row-gap: 3rem;
   grid-template-columns: 1fr 2fr 1fr;
-  max-width: 65rem;
+  max-width: $main-container;
   margin-bottom: 3rem;
 
   @include MW414 {
@@ -30,13 +30,13 @@
 .bg-sound {
   width: 64px;
   height: 64px;
-  background: url("../img/css_sprites.png") -94px -10px;
+  background: url('../img/css_sprites.png') -94px -10px;
 }
 
 .bg-no-sound {
   width: 64px;
   height: 64px;
-  background: url("../img/css_sprites.png") -10px -10px;
+  background: url('../img/css_sprites.png') -10px -10px;
 }
 
 .sound {
@@ -99,7 +99,6 @@
   text-transform: uppercase;
   border: white solid 0.4rem;
   border-radius: 8%;
-
   &:hover {
     color: $bluegrey;
     background-color: #fff;

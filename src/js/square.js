@@ -36,8 +36,8 @@ export default class Square {
       const hasNextStep = this._squareHasNextStep(posCoords, square.textContent)
       allPossibleMove.push(hasNextStep)
     })
-    this._hasNextStep = !allPossibleMove.every((el) => el === false)
-    if (!this._hastNextStep) window.$state.setGameStatus(false)
+    this._hasNextStep = allPossibleMove.some((el) => el)
+    if (!this._hasNextStep) window.$state.setGameStatus(false)
   }
 
   _squareHasNextStep(coordsArr, checkValue) {

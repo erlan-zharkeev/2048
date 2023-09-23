@@ -133,7 +133,7 @@ module.exports = {
     },
   },
   devServer: {
-    clientLogLevel: 'silent',
+    clientLogLevel: 'silent'
   },
   devtool: isDev ? 'source-map' : '',
 }

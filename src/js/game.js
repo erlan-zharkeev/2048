@@ -6,7 +6,7 @@ import {
   loadGameFromLs,
 } from './system'
 
-import { toggleModal, closeAllMessages, setVersion } from './domUpdate'
+import { toggleModal, closeAllMessages, setVersion } from './dom-update'
 
 window.onload = () => {
   const lsData = window.$ls.getLsData()

@@ -1,6 +1,6 @@
 import Square from './square'
 import { getRandNum } from './helpers'
-import { clearSquares, loadSquares } from './domUpdate'
+import { clearSquares, loadSquares } from './dom-update'
 
 function startMove(dir) {
   new Square(getRandNum(), dir)

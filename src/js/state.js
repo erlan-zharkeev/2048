@@ -1,4 +1,4 @@
-import { updateSoundIcon, updateDomScore, showMessage } from './domUpdate'
+import { updateSoundIcon, updateDomScore, showMessage } from './dom-update'
 
 export default class State {
   constructor(
