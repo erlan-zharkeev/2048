@@ -32,7 +32,7 @@ export function initMove(e) {
 }
 
 export function listenSwipe() {
-  const swipeArea = window.$state.$refs().table
+  const swipeArea = window.$state.getRefs().table
   const hammerTime = new Hammer(swipeArea)
   hammerTime.get('swipe').set({
     direction: Hammer.DIRECTION_ALL,

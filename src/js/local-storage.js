@@ -1,19 +1,11 @@
-export default class LocalStorage {
+export class LocalStorage {
   saveAll() {
     const data = {
       squares: window.$state.getSquaresMap(),
-      score: window.$state.getScore(),
+      score: window.$state.score,
       soundStatus: window.$state.getSoundStatus(),
     }
     this.save(data)
-  }
-
-  _stringify(data) {
-    return JSON.stringify(data)
-  }
-
-  _parse(data) {
-    return JSON.parse(data)
   }
 
   save(data) {
@@ -21,12 +13,12 @@ export default class LocalStorage {
     Object.entries(data).forEach(([key, val]) => {
       currentData[key] = val
     })
-    const stringifiedData = this._stringify(currentData)
+    const stringifiedData = JSON.stringify(currentData)
     localStorage.setItem('2048', stringifiedData)
   }
 
   getLsData() {
     const data = localStorage.getItem('2048')
-    return this._parse(data)
+    return JSON.parse(data)
   }
 }

@@ -1,20 +1,26 @@
 import { updateSoundIcon, updateDomScore, showMessage } from './dom-update'
 
-export default class State {
+export class State {
+  #soundStatus
+  #score
+  #initSquaresQuantity
+  #transitionDuration
+  #gameStatus
+  #refs
   constructor(
     soundStatus = false,
     score = 0,
     initSquaresQuantity = 2,
     gameStatus = true,
-    transitionDuration = 100
+    transitionDuration = 100,
   ) {
-    this._soundStatus = soundStatus
-    this._score = score
-    this._initSquaresQuantity = initSquaresQuantity
-    this._gameStatus = gameStatus
-    this._transitionDuration = transitionDuration
+    this.#soundStatus = soundStatus
+    this.#score = score
+    this.#initSquaresQuantity = initSquaresQuantity
+    this.#transitionDuration = transitionDuration
+    this.#gameStatus = gameStatus
 
-    this._refs = {
+    this.#refs = {
       version: document.querySelector('.version'),
       table: document.querySelector('.table'),
       cells: document.querySelectorAll('.table__cell'),
@@ -29,62 +35,59 @@ export default class State {
     }
   }
 
+  getRefs() {
+    return this.#refs
+  }
+
+  getTransitionDuration () {
+    return this.#transitionDuration
+  }
+
+  getInitSquaresQuantity () {
+    return this.#initSquaresQuantity
+  }
+
+  getSoundStatus() {
+    return this.#soundStatus
+  }
+
+  getScore() {
+    return this.#score
+  }
+
+
   setSoundStatus(val) {
-    this._soundStatus = val
+    this.#soundStatus = val
     updateSoundIcon()
   }
 
   toggleSoundStatus() {
-    this._soundStatus = !this._soundStatus
+    this.#soundStatus = !this.#soundStatus
     updateSoundIcon()
   }
 
   setScore(val) {
-    this._score = val
+    this.#score = val
     updateDomScore()
   }
 
   resetScore() {
-    this._score = 0
+    this.#score = 0
     updateDomScore()
   }
 
   addScoreValue(value) {
-    this._score += Number(value)
+    this.#score += Number(value)
     updateDomScore()
   }
 
   setGameStatus(value) {
-    this._gameStatus = value
-    this._gameStatus ? showMessage('win') : showMessage('lose')
-  }
-
-  $refs() {
-    return this._refs
-  }
-
-  getSoundStatus() {
-    return this._soundStatus
-  }
-
-  getScore() {
-    return this._score
-  }
-
-  getInitSquaresQuantity() {
-    return this._initSquaresQuantity
-  }
-
-  getGameStatus() {
-    return this._gameStatus
+    this.#gameStatus = value
+    this.#gameStatus ? showMessage('win') : showMessage('lose')
   }
 
   getUpdatedDomSquares() {
     return document.querySelectorAll('.square')
-  }
-
-  getTransitionDuration() {
-    return this._transitionDuration
   }
 
   getSquaresMap() {
@@ -97,7 +100,7 @@ export default class State {
   }
 
   areAllMessagesClosed() {
-    return Array.from(this.$refs().messages).every((elem) =>
+    return Array.from(this.getRefs().messages).every((elem) =>
       elem.classList.contains('hide')
     )
   }

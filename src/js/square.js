@@ -1,10 +1,10 @@
 import { randomizer } from './helpers'
-import { Sound } from './sound'
+import { sound } from './sound'
 
 export default class Square {
   constructor(num, dir, id) {
-    this._table = window.$state.$refs().table
-    this._cells = window.$state.$refs().cells
+    this._table = window.$state.getRefs().table
+    this._cells = window.$state.getRefs().cells
     this._hasNextStep = true
     this._num = num
     this._dir = dir
@@ -21,7 +21,7 @@ export default class Square {
     if (this._hasNextStep) {
       this._clearClass(this._sortedSquares, 'new')
       this._prepForMove()
-      new Sound('move')
+      sound('move')
       this._append()
     }
     if (!this._getFreePos()) {
@@ -144,7 +144,7 @@ export default class Square {
   }
 
   _merge(square, innerSquare) {
-    new Sound('merge')
+    sound('merge')
     innerSquare.remove()
     square.textContent = Number(square.textContent) * 2
     if (square.textContent === '2048') window.$state.setGameStatus(true)
