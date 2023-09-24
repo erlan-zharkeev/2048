@@ -18,14 +18,12 @@ export function clearSquares() {
 }
 
 export function loadSquares(squares) {
-  squares.forEach((square) => {
-    new Square(square.value, null, square.position)
-  })
+  squares.forEach((square) => new Square(square.value, null, square.position))
 }
 
 export function updateDomScore() {
   const score = window.$state.getRefs().scoreEl
-  score.textContent = window.$state.score
+  score.textContent = window.$state.getScore()
 }
 
 export function toggleModal() {

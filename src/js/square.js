@@ -91,12 +91,9 @@ export default class Square {
       this.#addClone(clone, startPosClone)
       this.#addOriginal(cell, square)
       this.#moveClone(cell, clone, startPosClone, direct)
-
-      const timerId = setTimeout(() => {
+      setTimeout(() => {
         clone.remove()
-        timerId = null
       }, window.$state.getTransitionDuration())
-
       if (innerSquare) this.#merge(square, innerSquare)
     }
   }
@@ -139,10 +136,9 @@ export default class Square {
     square.classList.add('hide')
     cell.append(square)
     square.id = cell.id
-    const timerId = setTimeout(() => {
+    setTimeout(() => {
       square.classList.remove('hide')
     }, window.$state.getTransitionDuration())
-    timerId = null
   }
 
   #merge(square, innerSquare) {
@@ -156,16 +152,15 @@ export default class Square {
 
   #isCellFree(coords, posY, posX, square, value) {
     const cell = this.#table.querySelector(`.table__cell[id="${coords}"]`)
-    if (cell.hasChildNodes()) {
-      const innerSquare = cell.querySelector('.square')
-      const isContentEqual = innerSquare.textContent === value
-      const isNotMerged = !innerSquare.classList.contains('merged')
-      if (isContentEqual && isNotMerged) {
-        this.#moveTo(cell, square, innerSquare, this.#dir)
-      } else this.#corrMov(this.#dir, `${posY}${posX}`, square)
-      return
+    if (!cell.hasChildNodes()) return this.#getNextCell(this.#dir, `${posY}${posX}`, square)
+    const innerSquare = cell.querySelector('.square')
+    const isContentEqual = innerSquare.textContent === value
+    const isNotMerged = !innerSquare.classList.contains('merged')
+    if (isContentEqual && isNotMerged) {
+      this.#moveTo(cell, square, innerSquare, this.#dir)
+    } else {
+      this.#corrMov(this.#dir, `${posY}${posX}`, square)
     }
-    this.#getNextCell(this.#dir, `${posY}${posX}`, square)
   }
 
   #corrMov(direction, coords, square) {

@@ -67,6 +67,7 @@ export class State {
   }
 
   setScore(val) {
+    console.log(val)
     this.#score = val
     updateDomScore()
   }
@@ -76,8 +77,9 @@ export class State {
     updateDomScore()
   }
 
-  addScoreValue(value) {
-    this.#score += Number(value)
+  addScoreValue(val) {
+    console.log(val)
+    this.#score += Number(val)
     updateDomScore()
   }
 
