@@ -14,26 +14,24 @@ window.onload = () => {
   window.$ls.saveAll()
   setVersion()
   listenSwipe()
-  window.$state.getRefs().soundIcon.addEventListener('click', () => {
+  const { soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody } = window.$state.getRefs()
+  soundIcon.addEventListener('click', () => {
     window.$state.toggleSoundStatus()
-    window.$ls.save({
-      soundStatus: window.$state.getSoundStatus(),
-    })
+    window.$ls.save({ soundStatus: window.$state.getSoundStatus() })
   })
-  window.$state.getRefs().newGameBtn.addEventListener('click', initNewGame)
-  window.$state.getRefs().resetGameBtn.addEventListener('click', () => {
+  newGameBtn.addEventListener('click', initNewGame)
+  resetGameBtn.addEventListener('click', () => {
     initNewGame()
     closeAllMessages()
   })
-  window.$state.getRefs().continueBtn.addEventListener('click', closeAllMessages)
-  window.$state.getRefs().questionIcon.addEventListener('click', (e) => {
+  continueBtn.addEventListener('click', closeAllMessages)
+  questionIcon.addEventListener('click', (e) => {
     e.stopPropagation()
     if (window.$state.areAllMessagesClosed()) toggleModal()
   })
   window.addEventListener('click', () => {
-    const modal = window.$state.getRefs().modalBody
-    const isModalOpen = !modal.classList.contains('hide')
-    if (isModalOpen) modal.classList.add('hide')
+    const isModalOpen = !modalBody.classList.contains('hide')
+    if (isModalOpen) modalBody.classList.add('hide')
   })
   window.addEventListener('keyup', initMove)
 }
