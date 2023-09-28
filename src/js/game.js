@@ -5,19 +5,20 @@ import {
   listenSwipe,
   loadGameFromLs,
 } from './system'
-
+import { storage } from './local-storage'
 import { toggleModal, closeAllMessages, setVersion } from './dom-update'
+import { state } from './state'
 
 window.onload = () => {
-  const lsData = window.$ls.getLsData()
+  const lsData = storage.getLsData()
   lsData ? loadGameFromLs(lsData) : initGame()
-  window.$ls.saveAll()
+  storage.saveAll()
   setVersion()
   listenSwipe()
-  const { soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody } = window.$state.getRefs()
+  const { soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody } = state.getRefs()
   soundIcon.addEventListener('click', () => {
-    window.$state.toggleSoundStatus()
-    window.$ls.save({ soundStatus: window.$state.getSoundStatus() })
+    state.toggleSoundStatus()
+    storage.save({ soundStatus: state.getSoundStatus() })
   })
   newGameBtn.addEventListener('click', initNewGame)
   resetGameBtn.addEventListener('click', () => {
@@ -27,7 +28,7 @@ window.onload = () => {
   continueBtn.addEventListener('click', closeAllMessages)
   questionIcon.addEventListener('click', (e) => {
     e.stopPropagation()
-    if (window.$state.areAllMessagesClosed()) toggleModal()
+    if (state.areAllMessagesClosed()) toggleModal()
   })
   window.addEventListener('click', () => {
     const isModalOpen = !modalBody.classList.contains('hide')

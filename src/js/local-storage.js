@@ -1,9 +1,10 @@
-export class LocalStorage {
+import { state } from './state'
+class LocalStorage {
   saveAll() {
     const data = {
-      squares: window.$state.getSquaresMap(),
-      score: window.$state.getScore(),
-      soundStatus: window.$state.getSoundStatus(),
+      squares: state.getSquaresMap(),
+      score: state.getScore(),
+      soundStatus: state.getSoundStatus(),
     }
     this.save(data)
   }
@@ -22,3 +23,5 @@ export class LocalStorage {
     return JSON.parse(data)
   }
 }
+
+export const storage = new LocalStorage()

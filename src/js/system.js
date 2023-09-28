@@ -1,27 +1,28 @@
 import Square from './square'
 import { getRandNum } from './helpers'
 import { clearSquares, loadSquares } from './dom-update'
+import { state } from './state'
 
 function startMove(dir) {
   new Square(getRandNum(), dir)
 }
 
 export function initGame() {
-  for (let i = 0; i < window.$state.getInitSquaresQuantity(); i += 1) {
+  for (let i = 0; i < state.getInitSquaresQuantity(); i += 1) {
     new Square(getRandNum())
   }
 }
 
 export function initNewGame() {
-  window.$state.resetScore()
+  state.resetScore()
   clearSquares()
   initGame()
 }
 
 export function loadGameFromLs(lsData) {
   loadSquares(lsData.squares)
-  window.$state.setScore(lsData.score)
-  window.$state.setSoundStatus(lsData.soundStatus)
+  state.setScore(lsData.score)
+  state.setSoundStatus(lsData.soundStatus)
 }
 
 export function initMove(e) {
@@ -32,7 +33,7 @@ export function initMove(e) {
 }
 
 export function listenSwipe() {
-  const swipeArea = window.$state.getRefs().table
+  const swipeArea = state.getRefs().table
   const hammerTime = new Hammer(swipeArea)
   hammerTime.get('swipe').set({
     direction: Hammer.DIRECTION_ALL,

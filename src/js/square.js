@@ -1,5 +1,7 @@
 import { randomizer } from './helpers'
 import { sound } from './sound'
+import { storage } from './local-storage'
+import { state } from './state'
 
 export default class Square {
   #table
@@ -11,14 +13,14 @@ export default class Square {
   #square
   #squares
   constructor(num, dir, id) {
-    this.#table = window.$state.getRefs().table
-    this.#cells = window.$state.getRefs().cells
+    this.#table = state.getRefs().table
+    this.#cells = state.getRefs().cells
     this.#hasNextStep = true
     this.#num = num
     this.#dir = dir
     this.#sortedSquares = []
     this.#square = this.#getNewSquare()
-    this.#squares = window.$state.getUpdatedDomSquares()
+    this.#squares = state.getUpdatedDomSquares()
     this.#clearClass(this.#squares, 'merged')
     this.#sortSquaresArr()
     this.#dir ? this.#initAction() : this.#append(id)
@@ -42,7 +44,7 @@ export default class Square {
       allPossibleMove.push(hasNextStep)
     })
     this.#hasNextStep = allPossibleMove.some((el) => el)
-    if (!this.#hasNextStep) window.$state.setGameStatus(false)
+    if (!this.#hasNextStep) state.setGameStatus(false)
   }
 
   #squareHasNextStep(coordsArr, checkValue) {
@@ -93,7 +95,7 @@ export default class Square {
       this.#moveClone(cell, clone, startPosClone, direct)
       setTimeout(() => {
         clone.remove()
-      }, window.$state.getTransitionDuration())
+      }, state.getTransitionDuration())
       if (innerSquare) this.#merge(square, innerSquare)
     }
   }
@@ -138,16 +140,16 @@ export default class Square {
     square.id = cell.id
     setTimeout(() => {
       square.classList.remove('hide')
-    }, window.$state.getTransitionDuration())
+    }, state.getTransitionDuration())
   }
 
   #merge(square, innerSquare) {
     sound('merge')
     innerSquare.remove()
     square.textContent = Number(square.textContent) * 2
-    if (square.textContent === '2048') window.$state.setGameStatus(true)
+    if (square.textContent === '2048') state.setGameStatus(true)
     square.classList.add(`s${square.textContent}`, 'merged')
-    window.$state.addScoreValue(square.textContent)
+    state.addScoreValue(square.textContent)
   }
 
   #isCellFree(coords, posY, posX, square, value) {
@@ -311,9 +313,9 @@ export default class Square {
       freeCell.append(this.#square)
       this.#square.classList.add('new')
     }
-    window.$ls.save({
-      squares: window.$state.getSquaresMap(),
-      score: window.$state.getScore(),
+    storage.save({
+      squares: state.getSquaresMap(),
+      score: state.getScore(),
     })
   }
 }
