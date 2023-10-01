@@ -1,6 +1,6 @@
 #!/bin/bash
 
-eslint="yarn lint"
+eslint="yarn eslint"
 stylelint="yarn stylelint"
 
 if ! $eslint; then
