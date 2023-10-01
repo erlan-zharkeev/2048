@@ -16,6 +16,7 @@ image: node:14.20.1
 
 stages:
   - build
+  - deploy
 
 cache:
   paths:
