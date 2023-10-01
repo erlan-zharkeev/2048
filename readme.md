@@ -1,6 +1,7 @@
 # 2048
 Recommended node v 14.20.1
 Before push to master make build and update version
+If pre-commit hooks not works, run in get/hooks dir following chmod +x pre-commit
 
 Based on [2048](http://saming.fr/p/2048/).
 
