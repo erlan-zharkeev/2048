@@ -1,8 +1,8 @@
 .info {
   display: grid;
   grid-row-gap: 3rem;
-  grid-template-columns: 1fr 2fr 1fr;
-  max-width: $main-container;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: $main-container;
   margin-bottom: 3rem;
 
   @include MW414 {

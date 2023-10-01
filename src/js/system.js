@@ -1,6 +1,6 @@
-import Square from './square'
+import Hammer from 'hammerjs'
+import { Square } from './square'
 import { getRandNum } from './helpers'
-import { clearSquares, loadSquares } from './dom-update'
 import { state } from './state'
 
 function startMove(dir) {
@@ -15,12 +15,14 @@ export function initGame() {
 
 export function initNewGame() {
   state.resetScore()
-  clearSquares()
+  state.getUpdatedDomSquares().forEach((square) => {
+    square.remove()
+  })
   initGame()
 }
 
 export function loadGameFromLs(lsData) {
-  loadSquares(lsData.squares)
+  lsData.squares.forEach((square) => new Square(square.value, null, square.position))
   state.setScore(lsData.score)
   state.setSoundStatus(lsData.soundStatus)
 }
@@ -37,7 +39,7 @@ export function listenSwipe() {
   const hammerTime = new Hammer(swipeArea)
   hammerTime.get('swipe').set({
     direction: Hammer.DIRECTION_ALL,
-    pointers: 1,
+    pointers: 1
   })
   hammerTime.on('swipe', (event) => {
     const dirNum = event.direction
@@ -59,5 +61,3 @@ export function listenSwipe() {
     }
   })
 }
-
-export default null

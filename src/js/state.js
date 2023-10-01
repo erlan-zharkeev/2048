@@ -1,18 +1,22 @@
-import { updateSoundIcon, updateDomScore, showMessage } from './dom-update'
-
-export class State {
+class State {
   #soundStatus
+
   #score
+
   #initSquaresQuantity
+
   #transitionDuration
+
   #gameStatus
+
   #refs
+
   constructor(
     soundStatus = false,
     score = 0,
     initSquaresQuantity = 2,
     gameStatus = true,
-    transitionDuration = 100,
+    transitionDuration = 100
   ) {
     this.#soundStatus = soundStatus
     this.#score = score
@@ -31,19 +35,34 @@ export class State {
       resetGameBtn: document.querySelector('#reset-game-btn'),
       continueBtn: document.querySelector('#continue-btn'),
       scoreEl: document.querySelector('#scoreNum'),
-      messages: document.querySelectorAll('.message'),
+      messages: document.querySelectorAll('.message')
     }
+  }
+
+  #updateSoundIcon() {
+    const icon = this.getRefs().soundIcon
+    icon.className = this.getSoundStatus() ? 'bg-sound' : 'bg-no-sound'
+  }
+
+  #updateDomScore() {
+    const score = this.getRefs().scoreEl
+    score.textContent = this.getScore()
+  }
+
+  #showMessage(inputMessage) {
+    const message = document.querySelector(`.${inputMessage}`)
+    message.classList.remove('hide')
   }
 
   getRefs() {
     return this.#refs
   }
 
-  getTransitionDuration () {
+  getTransitionDuration() {
     return this.#transitionDuration
   }
 
-  getInitSquaresQuantity () {
+  getInitSquaresQuantity() {
     return this.#initSquaresQuantity
   }
 
@@ -55,35 +74,34 @@ export class State {
     return this.#score
   }
 
-
   setSoundStatus(val) {
     this.#soundStatus = val
-    updateSoundIcon()
+    this.#updateSoundIcon()
   }
 
   toggleSoundStatus() {
     this.#soundStatus = !this.#soundStatus
-    updateSoundIcon()
+    this.#updateSoundIcon()
   }
 
   setScore(val) {
     this.#score = Number(val)
-    updateDomScore()
+    this.#updateDomScore()
   }
 
   resetScore() {
     this.#score = 0
-    updateDomScore()
+    this.#updateDomScore()
   }
 
   addScoreValue(val) {
     this.#score += Number(val)
-    updateDomScore()
+    this.#updateDomScore()
   }
 
   setGameStatus(value) {
     this.#gameStatus = value
-    this.#gameStatus ? showMessage('win') : showMessage('lose')
+    this.#gameStatus ? this.#showMessage('win') : this.#showMessage('lose')
   }
 
   getUpdatedDomSquares() {
@@ -100,9 +118,7 @@ export class State {
   }
 
   areAllMessagesClosed() {
-    return Array.from(this.getRefs().messages).every((elem) =>
-      elem.classList.contains('hide')
-    )
+    return Array.from(this.getRefs().messages).every((elem) => elem.classList.contains('hide'))
   }
 }
 

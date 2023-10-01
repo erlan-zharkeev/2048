@@ -1,10 +1,11 @@
 import { state } from './state'
+
 class LocalStorage {
   saveAll() {
     const data = {
       squares: state.getSquaresMap(),
       score: state.getScore(),
-      soundStatus: state.getSoundStatus(),
+      soundStatus: state.getSoundStatus()
     }
     this.save(data)
   }

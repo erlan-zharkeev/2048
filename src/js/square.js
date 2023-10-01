@@ -1,17 +1,33 @@
+import { Howl } from 'howler'
 import { randomizer } from './helpers'
-import { sound } from './sound'
-import { storage } from './local-storage'
 import { state } from './state'
+import { storage } from './local-storage'
 
-export default class Square {
+export function sound(sampleName) {
+  const currentSound = new Howl({
+    src: [`./assets/audio/${sampleName}.mp3`],
+    volume: 0.3
+  })
+  if (state.getSoundStatus()) currentSound.play()
+}
+
+export class Square {
   #table
+
   #cells
+
   #hasNextStep
+
   #num
+
   #dir
+
   #sortedSquares
+
   #square
+
   #squares
+
   constructor(num, dir, id) {
     this.#table = state.getRefs().table
     this.#cells = state.getRefs().cells
@@ -315,7 +331,7 @@ export default class Square {
     }
     storage.save({
       squares: state.getSquaresMap(),
-      score: state.getScore(),
+      score: state.getScore()
     })
   }
 }

@@ -1,21 +1,36 @@
-import {
-  initGame,
-  initNewGame,
-  initMove,
-  listenSwipe,
-  loadGameFromLs,
-} from './system'
 import { storage } from './local-storage'
-import { toggleModal, closeAllMessages, setVersion } from './dom-update'
 import { state } from './state'
+import { isInternetExplorer } from './helpers'
+import {
+  loadGameFromLs, listenSwipe, initNewGame, initMove,
+  initGame
+} from './system'
+import { version } from '../../package.json'
 
 window.onload = () => {
+  if (isInternetExplorer()) {
+    const ie = document.querySelector('.IE')
+    ie.classList.remove('hide')
+    return
+  }
+
+  function closeAllMessages() {
+    state.getRefs().messages.forEach((message) => {
+      message.classList.add('hide')
+    })
+  }
+
   const lsData = storage.getLsData()
   lsData ? loadGameFromLs(lsData) : initGame()
   storage.saveAll()
-  setVersion()
+  const versionDom = state.getRefs().version
+  versionDom.textContent = `v.${version}`
   listenSwipe()
-  const { soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody } = state.getRefs()
+
+  const {
+    soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody
+  } = state.getRefs()
+
   soundIcon.addEventListener('click', () => {
     state.toggleSoundStatus()
     storage.save({ soundStatus: state.getSoundStatus() })
@@ -28,7 +43,10 @@ window.onload = () => {
   continueBtn.addEventListener('click', closeAllMessages)
   questionIcon.addEventListener('click', (e) => {
     e.stopPropagation()
-    if (state.areAllMessagesClosed()) toggleModal()
+    if (state.areAllMessagesClosed()) {
+      const body = state.getRefs().modalBody
+      body.classList.toggle('hide')
+    }
   })
   window.addEventListener('click', () => {
     const isModalOpen = !modalBody.classList.contains('hide')
