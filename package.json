@@ -4,9 +4,7 @@
   "description": "simple game 2048",
   "private": true,
   "scripts": {
-    "dev-build": "cross-env NODE_ENV=development webpack --mode development",
     "build": "cross-env NODE_ENV=production webpack --mode production",
-    "watch": "cross-env NODE_ENV=development webpack --mode development --watch",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development  --open --host localhost",
     "stylelint": "stylelint ./src/assets/styles/*.scss --fix"
   },

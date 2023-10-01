@@ -1,11 +1,41 @@
+# pages:
+#   stage: deploy
+#   script:
+#     - mkdir .public
+#     - cp -r ./dist/* .public
+#     - mv .public public
+#   artifacts:
+#     paths:
+#       - public
+#   only:
+#     - master
+# Определите runner, который будет использоваться для вашего проекта.
+# Вам нужно будет создать runner в GitLab и настроить его для этого проекта.
+
+image: node:14.20.1
+
+stages:
+  - build
+
+cache:
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  script:
+    - yarn install
+    - yarn build
+  artifacts:
+    paths:
+      - dist/
+
 pages:
   stage: deploy
   script:
-    - mkdir .public
-    - cp -r ./dist/* .public
-    - mv .public public
+    - mv dist public/
   artifacts:
     paths:
-      - public
+      - public/
   only:
     - master
