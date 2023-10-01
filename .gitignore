@@ -1,7 +1,5 @@
-node_modules/
 node_modules
 desktop.ini
 .DS_Store
 ./src/.DS_Store
-
-
+.dist

@@ -1,5 +1,7 @@
 # 2048
 
+### Recommended node v 14.20.1
+
 Based on [2048](http://saming.fr/p/2048/).
 
 [You can play it here!](https://ketjo.gitlab.io/2048/)

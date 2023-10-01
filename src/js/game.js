@@ -1,45 +1,56 @@
+import { storage } from './local-storage'
+import { state } from './state'
+import { isInternetExplorer } from './helpers'
 import {
-  initGame,
-  initNewGame,
-  initMove,
-  listenSwipe,
-  loadGameFromLs,
+  loadGameFromLs, listenSwipe, initNewGame, initMove,
+  initGame
 } from './system'
-
-import { toggleModal, closeAllMessages, setVersion } from './domUpdate'
+import { version } from '../../package.json'
 
 window.onload = () => {
-  const lsData = window.$ls.getLsData()
-  lsData ? loadGameFromLs(lsData) : initGame()
-  window.$ls.saveAll()
-  setVersion()
-  listenSwipe()
-  window.$state.$refs().soundIcon.addEventListener('click', () => {
-    window.$state.toggleSoundStatus()
-    window.$ls.save({
-      soundStatus: window.$state.getSoundStatus(),
+  if (isInternetExplorer()) {
+    const ie = document.querySelector('.IE')
+    ie.classList.remove('hide')
+    return
+  }
+
+  function closeAllMessages() {
+    state.getRefs().messages.forEach((message) => {
+      message.classList.add('hide')
     })
+  }
+
+  const lsData = storage.getLsData()
+  lsData ? loadGameFromLs(lsData) : initGame()
+  storage.saveAll()
+  const versionDom = state.getRefs().version
+  versionDom.textContent = `v.${version}`
+  listenSwipe()
+
+  const {
+    soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody
+  } = state.getRefs()
+
+  soundIcon.addEventListener('click', () => {
+    state.toggleSoundStatus()
+    storage.save({ soundStatus: state.getSoundStatus() })
   })
-  window.$state.$refs().newGameBtn.addEventListener('click', () => {
-    initNewGame()
-  })
-  window.$state.$refs().resetGameBtn.addEventListener('click', () => {
+  newGameBtn.addEventListener('click', initNewGame)
+  resetGameBtn.addEventListener('click', () => {
     initNewGame()
     closeAllMessages()
   })
-  window.$state.$refs().continueBtn.addEventListener('click', () => {
-    closeAllMessages()
-  })
-  window.$state.$refs().questionIcon.addEventListener('click', (e) => {
+  continueBtn.addEventListener('click', closeAllMessages)
+  questionIcon.addEventListener('click', (e) => {
     e.stopPropagation()
-    if (window.$state.areAllMessagesClosed()) toggleModal()
+    if (state.areAllMessagesClosed()) {
+      const body = state.getRefs().modalBody
+      body.classList.toggle('hide')
+    }
   })
   window.addEventListener('click', () => {
-    const modal = window.$state.$refs().modalBody
-    const isModalOpen = !modal.classList.contains('hide')
-    if (isModalOpen) modal.classList.add('hide')
+    const isModalOpen = !modalBody.classList.contains('hide')
+    if (isModalOpen) modalBody.classList.add('hide')
   })
-  window.addEventListener('keyup', (e) => {
-    initMove(e)
-  })
+  window.addEventListener('keyup', initMove)
 }
