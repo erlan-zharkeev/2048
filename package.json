@@ -1,13 +1,13 @@
 {
   "name": "2048",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "description": "simple game 2048",
   "private": true,
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development  --open --host localhost",
     "stylelint": "stylelint ./src/assets/styles/*.scss --fix",
-    "lint": "eslint --fix ."
+    "eslint": "eslint --fix ."
   },
   "browserslist": [
     "> 1%",
@@ -58,6 +58,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
     "hammerjs": "^2.0.8",
-    "howler": "^2.2.2"
+    "howler": "^2.2.2",
+    "husky": "^8.0.3"
   }
 }
