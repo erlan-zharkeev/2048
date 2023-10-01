@@ -1,8 +1,6 @@
 # 2048
 
 ### Recommended node v 14.20.1
-### Before push to master make build and update version
-###
 
 Based on [2048](http://saming.fr/p/2048/).
 
