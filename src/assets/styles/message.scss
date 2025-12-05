@@ -1,3 +1,5 @@
+@use 'base' as *;
+
 .message {
   position: absolute;
   z-index: 10000;
@@ -29,6 +31,19 @@
     font-size: 2rem;
     text-transform: uppercase;
     border: 0.2rem solid $black;
+  }
+
+  @include media-query(768) {
+    font-size: 3rem;
+
+    span {
+      font-size: 2rem;
+    }
+
+    button {
+      padding: 1rem 3rem;
+      font-size: 1.6rem;
+    }
   }
 }
 
@@ -72,7 +87,7 @@
   i {
     margin-left: 1rem;
     padding: 1rem;
-    color: #fff;
+    color: $white;
     font-size: 2rem;
     background: $fb;
     border-radius: 2px;
@@ -83,7 +98,7 @@
   }
 
   .mail {
-    a {
+    button {
       display: flex;
       align-items: center;
       margin-top: 3rem;
@@ -91,6 +106,22 @@
       font-weight: 800;
       font-size: 3rem;
       border: 0.3rem solid $black;
+    }
+  }
+
+  @include media-query(768) {
+    padding: 0 1.5rem;
+    font-size: 3rem;
+    line-height: 6rem;
+
+    p {
+      font-size: 3rem;
+    }
+
+    .mail {
+      button {
+        font-size: 2.4rem;
+      }
     }
   }
 }
@@ -111,6 +142,8 @@
 
 .hide {
   z-index: -1;
+  visibility: hidden;
   opacity: 0;
   transition: 0.3s;
+  pointer-events: none;
 }

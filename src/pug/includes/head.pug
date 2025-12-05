@@ -4,8 +4,14 @@ head
     name='viewport',
     content='width=device-width, initial-scale=1, maximum-scale=1'
   )
-  meta(name='description', content='')
-  meta(name='keywords', content='')
+  meta(
+    name='description',
+    content='Play 2048 in your browser: swipe or use arrow keys to merge tiles and reach 2048 and beyond.'
+  )
+  meta(
+    name='keywords',
+    content='2048, puzzle, browser game, swipe controls, arrow keys'
+  )
   meta(name='apple-mobile-web-app-capable', content='yes')
   meta(
     name='apple-mobile-web-app-status-bar-style',
@@ -18,8 +24,18 @@ head
   link(rel='mask-icon', href='./safari-pinned-tab.svg', color='#5bbad5')
   meta(name='msapplication-TileColor', content='#da532c')
   meta(name='theme-color', content='#ffffff')
+  link(rel='preconnect', href='https://fonts.googleapis.com')
+  link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='anonymous')
+  meta(property='og:type', content='website')
+  meta(property='og:locale', content='en_US')
+  meta(property='og:title', content='2048 — классическая головоломка')
+  meta(
+    property='og:description',
+    content='Play 2048 in your browser: swipe or use arrow keys to merge tiles and reach 2048 and beyond.'
+  )
+  meta(property='og:image', content='/android-chrome-256x256.png')
   link(
     rel='stylesheet',
-    href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+    href='https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap'
   )
   title 2048

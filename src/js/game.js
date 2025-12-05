@@ -28,10 +28,12 @@ window.onload = () => {
   listenSwipe()
 
   const {
-    soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody
+    soundToggle, soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody
   } = state.getRefs()
 
-  soundIcon.addEventListener('click', () => {
+  const soundTarget = soundToggle || soundIcon
+
+  soundTarget.addEventListener('click', () => {
     state.toggleSoundStatus()
     storage.save({ soundStatus: state.getSoundStatus() })
   })
@@ -50,7 +52,16 @@ window.onload = () => {
   })
   window.addEventListener('click', () => {
     const isModalOpen = !modalBody.classList.contains('hide')
-    if (isModalOpen) modalBody.classList.add('hide')
+    if (isModalOpen) {
+      modalBody.classList.add('hide')
+    }
+  })
+  window.addEventListener('keydown', (e) => {
+    const isEsc = e.key === 'Escape'
+    const isModalOpen = !modalBody.classList.contains('hide')
+    if (isEsc && isModalOpen) {
+      modalBody.classList.add('hide')
+    }
   })
   window.addEventListener('keyup', initMove)
 }

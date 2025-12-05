@@ -1,3 +1,5 @@
+@use 'base' as *;
+
 .s2 {
   background-color: $cyan;
 }
@@ -23,7 +25,7 @@
 }
 
 .s128 {
-  background-color: $deeppurple;
+  background-color: $deep-purple;
 }
 
 .s256 {
@@ -35,7 +37,7 @@
 }
 
 .s1024 {
-  background-color: $bluegrey;
+  background-color: $blue-grey;
 }
 
 .s2048 {
@@ -51,14 +53,14 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: white;
+  color: $white;
   font-weight: 800;
   font-size: 4rem;
   border-radius: 6%;
   opacity: 1;
   transition: 0.1s;
 
-  @include L823 {
+  @include media-query(823, landscape) {
     font-size: 3rem;
   }
 }

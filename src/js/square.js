@@ -3,14 +3,6 @@ import { randomizer } from './helpers'
 import { state } from './state'
 import { storage } from './local-storage'
 
-export function sound(sampleName) {
-  const currentSound = new Howl({
-    src: [`./assets/audio/${sampleName}.mp3`],
-    volume: 0.3
-  })
-  if (state.getSoundStatus()) currentSound.play()
-}
-
 export class Square {
   #table
 
@@ -28,6 +20,10 @@ export class Square {
 
   #squares
 
+  #sounds
+
+  #moved
+
   constructor(num, dir, id) {
     this.#table = state.getRefs().table
     this.#cells = state.getRefs().cells
@@ -37,6 +33,8 @@ export class Square {
     this.#sortedSquares = []
     this.#square = this.#getNewSquare()
     this.#squares = state.getUpdatedDomSquares()
+    this.#sounds = new Map()
+    this.#moved = false
     this.#clearClass(this.#squares, 'merged')
     this.#sortSquaresArr()
     this.#dir ? this.#initAction() : this.#append(id)
@@ -46,8 +44,10 @@ export class Square {
     if (this.#hasNextStep) {
       this.#clearClass(this.#sortedSquares, 'new')
       this.#prepForMove()
-      sound('move')
-      this.#append()
+      if (this.#moved) {
+        this.#playSound('move')
+        this.#append()
+      }
     }
     if (!this.#getFreePos()) this.#checkForLose()
   }
@@ -104,6 +104,7 @@ export class Square {
 
   #moveTo(cell, square, innerSquare, direct) {
     if (cell.id !== square.id) {
+      this.#moved = true
       const clone = this.#createClone(square)
       const startPosClone = this.#getStartClonePos(square)
       this.#addClone(clone, startPosClone)
@@ -160,7 +161,7 @@ export class Square {
   }
 
   #merge(square, innerSquare) {
-    sound('merge')
+    this.#playSound('merge')
     innerSquare.remove()
     square.textContent = Number(square.textContent) * 2
     if (square.textContent === '2048') state.setGameStatus(true)
@@ -333,5 +334,21 @@ export class Square {
       squares: state.getSquaresMap(),
       score: state.getScore()
     })
+  }
+
+  #playSound(sampleName) {
+    if (!state.getSoundStatus()) return
+
+    let instance = this.#sounds.get(sampleName)
+
+    if (!instance) {
+      instance = new Howl({
+        src: [`./assets/audio/${sampleName}.mp3`],
+        volume: 0.3
+      })
+      this.#sounds.set(sampleName, instance)
+    }
+
+    instance.play()
   }
 }

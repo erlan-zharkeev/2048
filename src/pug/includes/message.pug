@@ -1,11 +1,11 @@
 .ie.hide
   span your browser not support
-.message.lose.hide
-  p you lose(
+.message.lose.hide(role='dialog', aria-modal='true', aria-live='assertive', aria-labelledby='lose-title')
+  p#lose-title you lose(
   span next time you will definitely win!
   button#reset-game-btn.new-game ok
-.message.win.hide
-  p Congratulations!
+.message.win.hide(role='dialog', aria-modal='true', aria-live='assertive', aria-labelledby='win-title')
+  p#win-title Congratulations!
   span you win!
   span keep going to reach 4096 tile!
   button#continue-btn continue

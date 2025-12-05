@@ -4,16 +4,22 @@ html(lang='en')
     .wrapper
       include includes/message
       include includes/settings
-      .game
-        .info
+      main.game
+        header.info
           .title
             h1 2048
           .sound
-            #sound-icon.bg-no-sound
+            button#sound-toggle(
+              type='button',
+              aria-label='Toggle sound',
+              aria-pressed='false',
+              data-state='off'
+            )
+              span#sound-icon.bg-no-sound
           .score
             p score
             span#scoreNum 0
-          .new-game-btn
+          button.new-game-btn(type='button')
             span new game
         .table
           - var rowCell = 0

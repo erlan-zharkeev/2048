@@ -11,8 +11,8 @@ cache:
 build:
   stage: build
   script:
-    - yarn install
-    - yarn build
+    - pnpm install
+    - pnpm build
   artifacts:
     paths:
       - dist/

@@ -30,6 +30,7 @@ class State {
       cells: document.querySelectorAll('.table__cell'),
       questionIcon: document.querySelector('.question-icon'),
       modalBody: document.querySelector('.question-content'),
+      soundToggle: document.querySelector('#sound-toggle'),
       soundIcon: document.querySelector('#sound-icon'),
       newGameBtn: document.querySelector('.new-game-btn'),
       resetGameBtn: document.querySelector('#reset-game-btn'),
@@ -42,6 +43,11 @@ class State {
   #updateSoundIcon() {
     const icon = this.getRefs().soundIcon
     icon.className = this.getSoundStatus() ? 'bg-sound' : 'bg-no-sound'
+    const toggle = this.getRefs().soundToggle
+    if (toggle) {
+      toggle.setAttribute('data-state', this.getSoundStatus() ? 'on' : 'off')
+      toggle.setAttribute('aria-pressed', this.getSoundStatus())
+    }
   }
 
   #updateDomScore() {

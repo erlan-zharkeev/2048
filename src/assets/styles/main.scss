@@ -1,3 +1,5 @@
+@use 'base' as *;
+
 ::-webkit-scrollbar {
   width: 0;
   background: transparent;
@@ -12,23 +14,19 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 
-  @include MW1024 {
+  @include media-query(1024) {
     font-size: 8px;
   }
 
-  @include MW768 {
+  @include media-query(768) {
     font-size: 6px;
   }
 
-  @include MW414 {
-    font-size: 5px;
-  }
-
-  @include MW320 {
+  @include media-query(320) {
     font-size: 4px;
   }
 
-  @include L823 {
+  @include media-query(823, landscape) {
     font-size: 6px;
   }
 }
@@ -65,14 +63,10 @@ body {
   overflow: hidden;
   background-color: $teal;
 
-  @include L823 {
+  @include media-query(823, landscape) {
     flex-direction: row;
     justify-content: space-evenly;
     max-width: 100%;
-  }
-
-  @include MW414 {
-    max-width: 75rem;
   }
 
   &:hover {
@@ -85,26 +79,21 @@ body {
   grid-template-columns: repeat(4, 1fr);
   width: $main-container;
   height: $main-container;
-  background-color: #fff;
+  background-color: $white;
   border: solid $white 0.6rem;
   border-radius: 3%;
-  box-shadow: 0.5rem 0.5rem 2rem black;
+  box-shadow: 0.5rem 0.5rem 2rem $black;
 
   &__cell {
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: rgb(169 169 169);
+    background-color: $dark-grey;
     border: solid $white 0.6rem;
     border-radius: 7%;
   }
 
-  @include MW414 {
-    width: 70rem;
-    height: 70rem;
-  }
-
-  @include L823 {
+  @include media-query(823, landscape) {
     width: 50rem;
     height: 50rem;
   }

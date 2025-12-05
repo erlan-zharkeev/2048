@@ -1,6 +1,6 @@
 {
   "name": "2048",
-  "version": "2.1.11",
+  "version": "2.2.0",
   "description": "simple game 2048",
   "private": false,
   "scripts": {
@@ -33,7 +33,6 @@
     "html-webpack-plugin": "^4.5.0",
     "image-webpack-loader": "^8.1.0",
     "mini-css-extract-plugin": "^0.11.2",
-    "node-sass": "^4.14.1",
     "postcss": "^8.4.6",
     "postcss-loader": "^4.0.3",
     "prettier": "^2.3.2",
@@ -41,7 +40,7 @@
     "pug-html-loader": "^1.1.5",
     "pug-loader": "^2.4.0",
     "raw-loader": "^4.0.2",
-    "sass": "^1.26.11",
+    "sass": "^1.94.2",
     "sass-loader": "^10.0.2",
     "style-loader": "^1.2.1",
     "stylelint": "^14.5.1",
