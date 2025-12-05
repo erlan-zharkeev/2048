@@ -1,4 +1,4 @@
-image: node:14.20.1
+image: node:18.13.0
 
 stages:
   - build
@@ -7,11 +7,15 @@ stages:
 cache:
   paths:
     - node_modules/
+    - .pnpm-store/
+
+before_script:
+  - npm install -g pnpm@8
 
 build:
   stage: build
   script:
-    - pnpm install
+    - pnpm install --frozen-lockfile
     - pnpm build
   artifacts:
     paths:
