@@ -7,16 +7,12 @@ stages:
 cache:
   paths:
     - node_modules/
-    - .pnpm-store/
-
-before_script:
-  - npm install -g pnpm@8
 
 build:
   stage: build
   script:
-    - pnpm install --frozen-lockfile
-    - pnpm build
+    - npm install
+    - npm run build
   artifacts:
     paths:
       - dist/
