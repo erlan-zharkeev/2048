@@ -97,18 +97,6 @@
     font-size: 3.5rem;
   }
 
-  .mail {
-    button {
-      display: flex;
-      align-items: center;
-      margin-top: 3rem;
-      padding: 1rem 2rem;
-      font-weight: 800;
-      font-size: 3rem;
-      border: 0.3rem solid $black;
-    }
-  }
-
   @include media-query(768) {
     padding: 0 1.5rem;
     font-size: 3rem;
