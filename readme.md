@@ -1,7 +1,5 @@
 # 2048
 
-Based on [2048](http://saming.fr/p/2048/).
-
 [You can play it here!](https://ketjo.gitlab.io/2048/)
 
 ### Contributions
