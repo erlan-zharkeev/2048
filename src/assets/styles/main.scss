@@ -1,5 +1,11 @@
 @use 'base' as *;
 
+// Prevent iOS from recoloring phone-like strings.
+a[href^='tel'] {
+  color: $black !important;
+  text-decoration: none;
+}
+
 ::-webkit-scrollbar {
   width: 0;
   background: transparent;
