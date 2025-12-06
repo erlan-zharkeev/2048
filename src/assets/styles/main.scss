@@ -1,12 +1,5 @@
 @use 'base' as *;
 
-// Prevent iOS from recoloring detected contact links.
-a[href^='tel'],
-a[href^='mailto'],
-a[x-apple-data-detectors] {
-  color: $black !important;
-  text-decoration: none;
-}
 
 ::-webkit-scrollbar {
   width: 0;

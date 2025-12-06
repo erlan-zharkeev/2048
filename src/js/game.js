@@ -50,7 +50,7 @@ window.onload = () => {
       body.classList.toggle('hide')
     }
   })
-  window.addEventListener('click', () => {
+  window.addEventListener('pointerdown', () => {
     const isModalOpen = !modalBody.classList.contains('hide')
     if (isModalOpen) {
       modalBody.classList.add('hide')

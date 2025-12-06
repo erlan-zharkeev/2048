@@ -1,12 +1,15 @@
 
+@use 'sass:meta';
+@use 'sass:math';
+
 @mixin media-query($breakpoint, $orientation: null) {
-  @if type-of($breakpoint) != 'number' {
+  @if meta.type-of($breakpoint) != 'number' {
     @error 'Unknown breakpoint `#{$breakpoint}`. Provide a numeric value (with or without units).';
   }
 
   $value: $breakpoint;
 
-  @if unitless($breakpoint) {
+  @if math.is-unitless($breakpoint) {
     $value: $breakpoint * 1px;
   }
 
