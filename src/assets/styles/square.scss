@@ -58,7 +58,7 @@
   font-size: 4rem;
   border-radius: 6%;
   opacity: 1;
-  transition: 0.1s;
+  transition: transform 0.1s;
 
   @include media-query(823, landscape) {
     font-size: 3rem;
