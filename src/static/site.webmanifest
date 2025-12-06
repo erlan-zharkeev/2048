@@ -1,6 +1,6 @@
 {
     "name": "2048",
-    "start_url": "/2048/",
+    "start_url": "./",
     "short_name": "2048",
     "icons": [
         {

@@ -3,3 +3,4 @@ desktop.ini
 .DS_Store
 ./src/.DS_Store
 .dist
+dist
