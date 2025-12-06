@@ -1,5 +1,6 @@
 {
     "name": "2048",
+    "start_url": "./index.html",
     "short_name": "2048",
     "icons": [
         {
@@ -14,6 +15,20 @@
         }
     ],
     "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "display": "standalone"
+    "background_color": "#2ea89c",
+    "display": "standalone",
+    "screenshots": [
+        {
+            "src": "./preview-mobile.png",
+            "sizes": "390x844",
+            "type": "image/png",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "./preview-desktop.png",
+            "sizes": "1920x1080",
+            "type": "image/png",
+            "form_factor": "wide"
+        }
+    ]
 }
