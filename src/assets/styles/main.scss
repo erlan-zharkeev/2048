@@ -69,10 +69,6 @@ body {
     justify-content: space-evenly;
     max-width: 100%;
   }
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .table {
@@ -104,4 +100,11 @@ body {
   a {
     color: $teal;
   }
+}
+
+.close-how-to {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 4rem;
 }

@@ -36,7 +36,8 @@ class State {
       resetGameBtn: document.querySelector('#reset-game-btn'),
       continueBtn: document.querySelector('#continue-btn'),
       scoreEl: document.querySelector('#scoreNum'),
-      messages: document.querySelectorAll('.message')
+      messages: document.querySelectorAll('.message'),
+      closeModalHowToBtn: document.querySelector('#close-modal-how-to')
     }
   }
 

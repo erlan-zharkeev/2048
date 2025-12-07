@@ -90,10 +90,6 @@
     outline: none;
     -webkit-tap-highlight-color: transparent;
 
-    &:hover {
-      cursor: pointer;
-    }
-
     span {
       display: block;
     }
@@ -132,7 +128,6 @@
   &:hover {
     color: $blue-grey;
     background-color: $white;
-    cursor: pointer;
     transition: 0.2s;
   }
 

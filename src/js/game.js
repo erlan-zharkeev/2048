@@ -28,7 +28,7 @@ window.onload = () => {
   listenSwipe()
 
   const {
-    soundToggle, soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody
+    soundToggle, soundIcon, newGameBtn, resetGameBtn, continueBtn, questionIcon, modalBody, closeModalHowToBtn
   } = state.getRefs()
 
   const soundTarget = soundToggle || soundIcon
@@ -50,13 +50,11 @@ window.onload = () => {
       body.classList.toggle('hide')
     }
   })
-  window.addEventListener('pointerdown', () => {
+  closeModalHowToBtn.addEventListener('click', () => {
     const isModalOpen = !modalBody.classList.contains('hide')
-    setTimeout(() => {
-      if (isModalOpen) {
-        modalBody.classList.add('hide')
-      }
-    }, 400);
+    if (isModalOpen) {
+      modalBody.classList.add('hide')
+    }
   })
   window.addEventListener('keydown', (e) => {
     const isEsc = e.key === 'Escape'
