@@ -1,5 +1,5 @@
-const CACHE_NAME = '2048-cache-v-1.1';
-const ASSETS = [
+const CACHE_NAME = '2048-cache-v-1.2';
+const STATIC_ASSETS = [
   './site.webmanifest',
   './apple-touch-icon.png',
   './android-chrome-192x192.png',
@@ -8,6 +8,7 @@ const ASSETS = [
   './favicon-16x16.png'
 ];
 
+console.log(CACHE_NAME, 'cache_name')
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
