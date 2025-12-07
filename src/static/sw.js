@@ -8,8 +8,6 @@ const STATIC_ASSETS = [
   './favicon-16x16.png'
 ];
 
-console.log(CACHE_NAME, 'cache_name')
-
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
