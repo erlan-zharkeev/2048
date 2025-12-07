@@ -52,9 +52,11 @@ window.onload = () => {
   })
   window.addEventListener('pointerdown', () => {
     const isModalOpen = !modalBody.classList.contains('hide')
-    if (isModalOpen) {
-      modalBody.classList.add('hide')
-    }
+    setTimeout(() => {
+      if (isModalOpen) {
+        modalBody.classList.add('hide')
+      }
+    }, 400);
   })
   window.addEventListener('keydown', (e) => {
     const isEsc = e.key === 'Escape'
