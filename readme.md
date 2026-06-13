@@ -2,11 +2,11 @@
 
 Based on [2048](http://saming.fr/p/2048/).
 
-[You can play it here!](https://ketjo.gitlab.io/2048/)
+[You can play it here!](https://erlan-zharkeev.github.io/2048/)
 
 ### Contributions
 
-[Erlan](https://gitlab.com/users/zharkeev.post/projects)
+[Erlan](https://github.com/erlan-zharkeev)
 
 ### Main screen
 
