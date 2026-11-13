@@ -14,15 +14,8 @@ window.onload = () => {
     return
   }
 
-  function closeAllMessages() {
-    state.getRefs().messages.forEach((message) => {
-      message.classList.add('hide')
-    })
-  }
-
   const lsData = storage.getLsData()
   lsData ? loadGameFromLs(lsData) : initGame()
-  storage.saveAll()
   const versionDom = state.getRefs().version
   versionDom.textContent = `v.${version}`
   listenSwipe()
@@ -36,11 +29,10 @@ window.onload = () => {
     storage.save({ soundStatus: state.getSoundStatus() })
   })
   newGameBtn.addEventListener('click', initNewGame)
-  resetGameBtn.addEventListener('click', () => {
-    initNewGame()
-    closeAllMessages()
+  resetGameBtn.addEventListener('click', initNewGame)
+  continueBtn.addEventListener('click', () => {
+    continueBtn.closest('.message').classList.add('hide')
   })
-  continueBtn.addEventListener('click', closeAllMessages)
   questionIcon.addEventListener('click', (e) => {
     e.stopPropagation()
     if (state.areAllMessagesClosed()) {

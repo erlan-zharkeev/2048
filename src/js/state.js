@@ -7,7 +7,7 @@ class State {
 
   #transitionDuration
 
-  #gameStatus
+  #isGameOver
 
   #refs
 
@@ -15,14 +15,13 @@ class State {
     soundStatus = false,
     score = 0,
     initSquaresQuantity = 2,
-    gameStatus = true,
     transitionDuration = 100
   ) {
     this.#soundStatus = soundStatus
     this.#score = score
     this.#initSquaresQuantity = initSquaresQuantity
     this.#transitionDuration = transitionDuration
-    this.#gameStatus = gameStatus
+    this.#isGameOver = false
 
     this.#refs = {
       version: document.querySelector('.version'),
@@ -99,13 +98,25 @@ class State {
     this.#updateDomScore()
   }
 
-  setGameStatus(value) {
-    this.#gameStatus = value
-    this.#gameStatus ? this.#showMessage('win') : this.#showMessage('lose')
+  showWinMessage() {
+    this.#showMessage('win')
+  }
+
+  isGameOver() {
+    return this.#isGameOver
+  }
+
+  setGameOver(value) {
+    this.#isGameOver = value
+    document.querySelector('.lose').classList.toggle('hide', !value)
+  }
+
+  closeMessages() {
+    this.#refs.messages.forEach((message) => message.classList.add('hide'))
   }
 
   getUpdatedDomSquares() {
-    return document.querySelectorAll('.square')
+    return this.#refs.table.querySelectorAll('.square')
   }
 
   getSquaresMap() {

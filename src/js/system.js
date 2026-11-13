@@ -1,30 +1,47 @@
 import Hammer from 'hammerjs'
-import { Square } from './square'
+import { Board, sound } from './board'
 import { getRandNum } from './helpers'
 import { state } from './state'
+import { storage } from './local-storage'
+
+const board = new Board()
+
+function updateGameStatus() {
+  state.setGameOver(!board.hasAvailableMoves())
+}
 
 function startMove(dir) {
-  new Square(getRandNum(), dir)
+  if (state.isGameOver()) return
+  if (!board.move(dir)) return
+
+  board.addSquare(getRandNum())
+  sound('move')
+  updateGameStatus()
+  storage.saveAll()
 }
 
 export function initGame() {
+  state.setGameOver(false)
   for (let i = 0; i < state.getInitSquaresQuantity(); i += 1) {
-    new Square(getRandNum())
+    board.addSquare(getRandNum())
   }
+  updateGameStatus()
+  storage.saveAll()
 }
 
 export function initNewGame() {
+  board.clear()
   state.resetScore()
-  state.getUpdatedDomSquares().forEach((square) => {
-    square.remove()
-  })
+  state.closeMessages()
   initGame()
 }
 
 export function loadGameFromLs(lsData) {
-  lsData.squares.forEach((square) => new Square(square.value, null, square.position))
+  lsData.squares.forEach((square) => board.addSquare(square.value, square.position))
   state.setScore(lsData.score)
   state.setSoundStatus(lsData.soundStatus)
+  updateGameStatus()
+  storage.saveAll()
 }
 
 export function initMove(e) {

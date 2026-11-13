@@ -1,7 +1,6 @@
 import { Howl } from 'howler'
 import { randomizer } from './helpers'
 import { state } from './state'
-import { storage } from './local-storage'
 
 export function sound(sampleName) {
   const currentSound = new Howl({
@@ -11,82 +10,80 @@ export function sound(sampleName) {
   if (state.getSoundStatus()) currentSound.play()
 }
 
-export class Square {
+export class Board {
   #table
 
   #cells
-
-  #hasNextStep
-
-  #num
 
   #dir
 
   #sortedSquares
 
-  #square
-
   #squares
 
-  constructor(num, dir, id) {
+  #hasMoved
+
+  #animationTimeout
+
+  constructor() {
     this.#table = state.getRefs().table
     this.#cells = state.getRefs().cells
-    this.#hasNextStep = true
-    this.#num = num
-    this.#dir = dir
-    this.#sortedSquares = []
-    this.#square = this.#getNewSquare()
+  }
+
+  move(direction) {
+    this.#finishAnimations()
+    this.#dir = direction
+    this.#hasMoved = false
     this.#squares = state.getUpdatedDomSquares()
     this.#clearClass(this.#squares, 'merged')
+    this.#clearClass(this.#squares, 'new')
     this.#sortSquaresArr()
-    this.#dir ? this.#initAction() : this.#append(id)
-  }
-
-  #initAction() {
-    if (this.#hasNextStep) {
-      this.#clearClass(this.#sortedSquares, 'new')
-      this.#prepForMove()
-      sound('move')
-      this.#append()
+    this.#prepForMove()
+    if (this.#hasMoved) {
+      this.#animationTimeout = setTimeout(() => {
+        this.#finishAnimations()
+      }, state.getTransitionDuration())
     }
-    if (!this.#getFreePos()) this.#checkForLose()
+    return this.#hasMoved
   }
 
-  #checkForLose() {
-    const allPossibleMove = []
-    this.#sortedSquares.forEach((square) => {
-      const posCoords = this.#getAllPosCoords(square.id)
-      const hasNextStep = this.#squareHasNextStep(posCoords, square.textContent)
-      allPossibleMove.push(hasNextStep)
-    })
-    this.#hasNextStep = allPossibleMove.some((el) => el)
-    if (!this.#hasNextStep) state.setGameStatus(false)
+  addSquare(num, id = null) {
+    const cell = id
+      ? this.#table.querySelector(`.table__cell[id="${id}"]`)
+      : this.#getFreePos()
+    if (!cell) return false
+
+    const square = document.createElement('div')
+    square.textContent = num
+    square.id = cell.id
+    square.classList.add('square', `s${num}`, 'new')
+    cell.append(square)
+    return true
   }
 
-  #squareHasNextStep(coordsArr, checkValue) {
-    const valuesArr = []
-    coordsArr.forEach((cell) => {
-      const innerSquare = cell.querySelector('.square')
-      const isEqual = innerSquare.textContent === checkValue
-      if (!innerSquare || isEqual) valuesArr.push('has')
+  hasAvailableMoves() {
+    return Array.from(this.#cells).some((cell) => {
+      const square = cell.querySelector('.square')
+      if (!square) return true
+
+      const [row, column] = cell.id.split('-').map(Number)
+      const neighbors = [`${row + 1}-${column}`, `${row}-${column + 1}`]
+      return neighbors.some((id) => {
+        const neighbor = this.#table.querySelector(`.table__cell[id="${id}"] .square`)
+        return neighbor?.textContent === square.textContent
+      })
     })
-    return !!valuesArr.length
   }
 
-  #getAllPosCoords(coords) {
-    const arr = []
-    const cells = []
-    const posY = Number(coords[0])
-    const posX = Number(coords[2])
-    if (posY !== 4) arr.push(`${posY + 1}-${posX}`)
-    if (posY !== 0) arr.push(`${posY - 1}-${posX}`)
-    if (posX !== 4) arr.push(`${posY}-${posX + 1}`)
-    if (posX !== 0) arr.push(`${posY}-${posX - 1}`)
-    arr.forEach((coord) => {
-      const cell = this.#table.querySelector(`.table__cell[id="${coord}"]`)
-      if (cell) cells.push(cell)
-    })
-    return cells
+  clear() {
+    this.#finishAnimations()
+    state.getUpdatedDomSquares().forEach((square) => square.remove())
+  }
+
+  #finishAnimations() {
+    clearTimeout(this.#animationTimeout)
+    document.querySelectorAll('.square.clone').forEach((clone) => clone.remove())
+    state.getUpdatedDomSquares().forEach((square) => square.classList.remove('hide'))
   }
 
   #clearClass(arr, className) {
@@ -109,10 +106,8 @@ export class Square {
       this.#addClone(clone, startPosClone)
       this.#addOriginal(cell, square)
       this.#moveClone(cell, clone, startPosClone, direct)
-      setTimeout(() => {
-        clone.remove()
-      }, state.getTransitionDuration())
       if (innerSquare) this.#merge(square, innerSquare)
+      this.#hasMoved = true
     }
   }
 
@@ -154,16 +149,13 @@ export class Square {
     square.classList.add('hide')
     cell.append(square)
     square.id = cell.id
-    setTimeout(() => {
-      square.classList.remove('hide')
-    }, state.getTransitionDuration())
   }
 
   #merge(square, innerSquare) {
     sound('merge')
     innerSquare.remove()
     square.textContent = Number(square.textContent) * 2
-    if (square.textContent === '2048') state.setGameStatus(true)
+    if (square.textContent === '2048') state.showWinMessage()
     square.classList.add(`s${square.textContent}`, 'merged')
     state.addScoreValue(square.textContent)
   }
@@ -302,36 +294,7 @@ export class Square {
   }
 
   #getFreePos() {
-    const freeCells = []
-    this.#cells.forEach((cell) => {
-      if (cell.childNodes.length === 0) freeCells.push(cell)
-    })
+    const freeCells = Array.from(this.#cells).filter((cell) => !cell.querySelector('.square'))
     return freeCells[randomizer(0, freeCells.length)]
-  }
-
-  #getNewSquare() {
-    const square = document.createElement('div')
-    square.classList.add('square')
-    square.textContent = this.#num
-    square.classList.add(`s${this.#num}`)
-    return square
-  }
-
-  #append(id = null) {
-    if (id) {
-      const target = this.#table.querySelector(`.table__cell[id="${id}"]`)
-      this.#square.id = target.id
-      this.#square.classList.add('new')
-      target.append(this.#square)
-    } else {
-      const freeCell = this.#getFreePos()
-      this.#square.id = freeCell.id
-      freeCell.append(this.#square)
-      this.#square.classList.add('new')
-    }
-    storage.save({
-      squares: state.getSquaresMap(),
-      score: state.getScore()
-    })
   }
 }
